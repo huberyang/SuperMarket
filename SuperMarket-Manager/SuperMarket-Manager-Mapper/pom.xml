@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ncs</groupId>
+		<artifactId>SuperMarket-Manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>SuperMarket-Manager-Mapper</artifactId>
+	<description>SuperMarket-Manager-Mapper</description>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Manager-Pojo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<!-- Mybatis-Spring整合 -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!--mybatis 物理分页插件 -->
+		<dependency>
+			<groupId>com.github.miemiedev</groupId>
+			<artifactId>mybatis-paginator</artifactId>
+		</dependency>
+		<!--mybatis 分页插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+		</dependency>
+		<!-- MySql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- 阿里druid 连接池 -->
+		<!--好处： 1.内置StatFilter插件，能够详细统计sql的执行性能 -->
+		<!-- 2.SQL执行日志，Druid提供了不同的LogFilter，能够支持Common-Logging、Log4j和JdkLog -->
+		<!-- 3.数据库密码加密。直接把数据库密码写在配置文件中，这是不好的行为，容易导致安全问题。DruidDruiver和DruidDataSource都支持PasswordCallback -->
+		<!-- 4.扩展JDBC，如果你要对JDBC层有编程的需求，可以通过Druid提供的Filter机制，很方便编写JDBC层的扩展插件 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.tld</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+
+</project>

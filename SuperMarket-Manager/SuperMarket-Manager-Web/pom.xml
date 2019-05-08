@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ncs</groupId>
+		<artifactId>SuperMarket-Manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>SuperMarket-Manager-Web</artifactId>
+	<packaging>war</packaging>
+	<description>SuperMarket-Manager-Web</description>
+
+	<dependencies>
+
+		<!-- JSP相关 -->
+		<!-- jstl标签 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<!-- 要用到HttpServletRequest和HttpServletResponse等对象，则需要引入servlet-api.jar -->
+		<!-- 一般在tomcat安装目录\lib 文件夹下面有，当你把web项目部署到tomcat，会自动加载这个jar包来识别Serlvet一些对象 -->
+		<!-- 而由于我们此工程将tomcat作为maven插件，则我们需要手动加入 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- 文件上传组件 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+
+		<!--依赖Common，Mapper，Pojo，Service项目 -->
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Manager-Mapper</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Manager-Pojo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Manager-Service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+
+</project>

@@ -17,7 +17,7 @@
     http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd ">
 
 	<!--扫描处理器Handler -->
-	<!--将controller bean创建在Spring MVC容器中（子容器）  -->
+	<!--将controller bean创建在Spring MVC容器中（子容器） -->
 	<context:component-scan
 		base-package="com.ncs.controller"></context:component-scan>
 
@@ -36,18 +36,19 @@
 	<!--静态资源的映射 -->
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**"></mvc:resources>
 	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"></mvc:resources>
-	
-	
-	<!--配置文件解析器  -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	    <!--上传文件的默认编码  -->
-	    <property name="defaultEncoding" value="UTF-8"/>
-	    <!--上传文件的大小限制 5M  -->
-	    <property name="maxUploadSize" value="5242880" />
-	
+
+
+	<!--配置文件解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!--上传文件的默认编码 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!--上传文件的大小限制 5M -->
+		<property name="maxUploadSize" value="5242880" />
+
 	</bean>
-	
-	
+
+
 	<!--拦截器配置（权限校验，登录认证...） -->
 
 	<!--校验器（登录校验） -->
@@ -55,5 +56,7 @@
 	<!--转换器（数据类型转换） -->
 
 	<!--异常处理器 -->
+
+	<!--配置消息转换器 -->
 
 </beans>

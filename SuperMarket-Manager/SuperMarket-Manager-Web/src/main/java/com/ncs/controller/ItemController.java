@@ -17,7 +17,7 @@ import com.ncs.service.ItemService;
  * @Title: ItemController.java
  * @Package com.ncs.controller
  * @Description: TODO(商品控制器)
- * @author: Stephen Yang
+ * @author: Hubery Yang
  * @date: Mar 26, 2019 11:42:01 PM
  * @version V1.0
  * @Copyright: 2019 Inc. All rights reserved.

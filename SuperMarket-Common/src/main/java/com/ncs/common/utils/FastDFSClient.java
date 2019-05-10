@@ -15,7 +15,7 @@ import org.csource.fastdfs.TrackerServer;
  * @Title:  FastDFSClient.java   
  * @Package com.ncs.common.utils   
  * @Description:    TODO(文件服务器插件客户端)   
- * @author: Stephen Yang   
+ * @author: Hubery Yang   
  * @date:   Apr 17, 2019 11:33:15 PM   
  * @version V1.0 
  * @Copyright: 2019 Inc. All rights reserved. 

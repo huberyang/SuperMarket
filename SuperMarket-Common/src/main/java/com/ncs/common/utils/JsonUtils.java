@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @Title:  JsonUtils.java   
  * @Package com.ncs.common.utils   
  * @Description:    TODO(自定义json和其他类型之间的转换)   
- * @author: Stephen Yang   
+ * @author: Hubery Yang   
  * @date:   Apr 17, 2019 11:32:31 PM   
  * @version V1.0 
  * @Copyright: 2019 Inc. All rights reserved. 

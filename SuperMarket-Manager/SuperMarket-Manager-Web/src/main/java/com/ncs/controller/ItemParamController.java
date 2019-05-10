@@ -16,7 +16,7 @@ import com.ncs.service.ItemParamService;
  * @Title: ItemParamController.java
  * @Package com.ncs.controller
  * @Description: TODO(商品规格参数及其详细信息操作)
- * @author: Stephen Yang
+ * @author: Hubery Yang
  * @date: Apr 25, 2019 11:39:02 PM
  * @version V1.0
  * @Copyright: 2019 Inc. All rights reserved.

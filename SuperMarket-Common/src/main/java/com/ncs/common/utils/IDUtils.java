@@ -7,7 +7,7 @@ import java.util.Random;
  * @Title:  IDUtils.java   
  * @Package com.ncs.common.utils   
  * @Description:    TODO(各种Id生成的策略)   
- * @author: Stephen Yang   
+ * @author: Hubery Yang   
  * @date:   Apr 18, 2019 2:55:18 PM   
  * @version V1.0 
  * @Copyright: 2019 Inc. All rights reserved. 

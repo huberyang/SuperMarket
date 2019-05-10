@@ -7,7 +7,7 @@ import java.util.List;
  * @Title:  EasyDataGridResult.java   
  * @Package com.ncs.common.pojo   
  * @Description:    TODO(easyUI DataGrid控件默认返回类型必须包含total和rows参数内容)   
- * @author: Stephen Yang   
+ * @author: Hubery Yang   
  * @date:   Apr 22, 2019 10:53:33 PM   
  * @version V1.0 
  * @Copyright: 2019 Inc. All rights reserved. 

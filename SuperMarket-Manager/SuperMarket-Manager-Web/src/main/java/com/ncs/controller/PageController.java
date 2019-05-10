@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Title: PageController.java
  * @Package com.ncs.controller
  * @Description: TODO(页面跳转)
- * @author: Stephen Yang
+ * @author: Hubery Yang
  * @date: Mar 26, 2019 11:38:11 PM
  * @version V1.0
  * @Copyright: 2019 Inc. All rights reserved.

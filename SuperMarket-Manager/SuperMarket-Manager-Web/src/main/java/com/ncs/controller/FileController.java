@@ -16,7 +16,7 @@ import com.ncs.service.FileService;
  * @Title:  FileController.java   
  * @Package com.ncs.controller   
  * @Description:    TODO(文件上传，文件（image，file，media...）)   
- * @author: Stephen Yang   
+ * @author: Hubery Yang   
  * @date:   Apr 17, 2019 2:04:33 PM   
  * @version V1.0 
  * @Copyright: 2019 Inc. All rights reserved. 
@@ -36,7 +36,7 @@ public class FileController {
 	 */
 	@RequestMapping("/pic/upload")
 	@ResponseBody
-	public String fileUpload(@RequestParam MultipartFile uploadFile)throws Exception {
+	public String fileUpload(@RequestParam MultipartFile uploadFile) throws Exception {
 		PicResult result = fileService.fileUpload(uploadFile);
 		String json = JsonUtils.objectToJson(result);		
 		return json;

@@ -11,11 +11,13 @@
 </div>
 <script type="text/javascript">
 $(function(){
+	
 	$("#contentCategory").tree({
 		url : '/content/category/list',
 		animate: true,
 		method : "GET",
-		onContextMenu: function(e,node){
+		
+		onContextMenu: function(e,node){//点击右键事件
             e.preventDefault();
             $(this).tree('select',node.target);
             $('#contentCategoryMenu').menu('show',{
@@ -43,6 +45,7 @@ $(function(){
         }
 	});
 });
+
 function menuHandler(item){
 	var tree = $("#contentCategory");
 	var node = tree.tree("getSelected");

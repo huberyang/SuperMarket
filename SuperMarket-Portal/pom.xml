@@ -20,6 +20,12 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 		<!-- Spring IOC容器相关 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -71,6 +77,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- httpclient -->
+		<!-- 模拟系统内部服务调用 （有些服务通过webService对外暴露，我们使用它模拟Client来调用系统自己的服务） -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>

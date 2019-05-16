@@ -1,10 +1,19 @@
 package com.ncs.portal.controller;
 
+
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.ncs.portal.service.ContentService;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	private ContentService contentService;
 	
 	/*
 	 * 
@@ -26,8 +35,11 @@ public class IndexController {
 	*/
 	
 	@RequestMapping("/index")
-	public String showIndex() {
+	public String showIndex(Model model) {
+		
+		String result = contentService.getBigADList();
+		model.addAttribute("ad1", result);
 		return "index";
 	}
-
+	
 }

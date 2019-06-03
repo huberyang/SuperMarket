@@ -15,9 +15,10 @@
     http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
     http://www.springframework.org/schema/cache
     http://www.springframework.org/schema/cache/spring-cache-4.1.xsd">
-    
-    <!--加载配置文件  -->
-    <context:property-placeholder location="classpath:properties/*.properties"/>
+
+	<!--加载配置文件 -->
+	<context:property-placeholder
+		location="classpath:properties/*.properties" />
 
 	<!--开启注解bean扫描 -->
 	<!-- 是用于激活那些已经在spring容器里注册过的bean（无论是通过xml的方式还是通过package sanning的方式）上面的注解 -->
@@ -40,18 +41,20 @@
 		<property name="minIdle" value="${jdbc.minIdle}"></property>
 	</bean>
 
-		
+
 	<!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 数据库连接池 -->
 		<property name="dataSource" ref="dataSource" />
 		<!-- 加载mybatis的全局配置文件 -->
-		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml" />
+		<property name="configLocation"
+			value="classpath:mybatis/sqlMapConfig.xml" />
 	</bean>
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.ncs.mapper" />
 	</bean>
-	
+
 
 	<!--事务配置 -->
 	<!-- 配置事务管理器 -->
@@ -88,6 +91,51 @@
 	</aop:config>
 
 
-	<!--缓存配置，这里使用redis -->
+	<!--缓存配置，这里使用redis|单机版我们需要配置redis的连接池|集群版，我们需要配置JedisCluster -->
+	<!--单机版jedis连接池配置 -->
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="host" value="${redis_single_server}"></constructor-arg>
+		<constructor-arg name="port" value="${redis_single_port}"></constructor-arg>
+	</bean>
+	<!--单机jedis实现类 -->
+	<bean id="jedisClientSingle"
+		class="com.ncs.rest.component.impl.JedisClientSingle" />
+
+	<!--集群jedisCluster配置 -->
+	<!-- <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+		<constructor-arg>
+			<set>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port1}"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port2}"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port3}"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port4}"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port5}"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
+					<constructor-arg name="port" value="${redis_cluster_port6}"></constructor-arg>
+				</bean>
+			</set>
+		</constructor-arg>
+	</bean> -->
+
+	<!--集群jedis实现类 -->
+	<!-- <bean id="jedisClientCluster"
+		class="com.ncs.rest.component.impl.JedisClientCluster" /> -->
+
 
 </beans>

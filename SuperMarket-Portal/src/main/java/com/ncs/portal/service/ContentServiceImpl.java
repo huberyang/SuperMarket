@@ -24,6 +24,8 @@ public class ContentServiceImpl implements ContentService {
 
 	@Override
 	public String getBigADList() {
+		
+		//从redis缓存中读取数据
         
 		//httpClient请求rest 服务
 		String url=rest_server_url + rest_server_content_url+ ad_content_category;
@@ -52,6 +54,8 @@ public class ContentServiceImpl implements ContentService {
 		
 		//将结果转化为json 数据
 		String jsonResult = JsonUtils.objectToJson(resultList);
+		
+		//使用redis缓存数据
 
 		return jsonResult;
 	}

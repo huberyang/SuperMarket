@@ -29,7 +29,7 @@
 		<pagehelper.version>4.1.6</pagehelper.version>
 		<jsqlparser.version>0.9.1</jsqlparser.version>
 		<commons-fileupload.version>1.4</commons-fileupload.version>
-		<jedis.version>2.7.2</jedis.version>
+		<jedis.version>3.0.1</jedis.version>
 		<solrj.version>4.10.3</solrj.version>
 		<fastdfs-client-java>1.27-SNAPSHOT</fastdfs-client-java>
 	</properties>

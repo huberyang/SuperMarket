@@ -58,6 +58,16 @@ public class JedisClientSingle implements JedisClient {
 		jedis.close();
 		return result;
 	}
+	
+	@Override
+	public Long hdel(String key, String... field) {
+		Jedis jedis = jedisPool.getResource();
+		jedis.auth(redis_single_auth);
+		Long result = jedis.hdel(key, field);
+		jedis.close();
+		return result;
+	}
+
 
 	@Override
 	public Long incr(String key) {

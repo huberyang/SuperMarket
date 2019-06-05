@@ -22,6 +22,8 @@ public interface JedisClient {
 	public Long hset(String key, String filed, String value);
 
 	public String hget(String key, String field);
+	
+	public Long hdel(String key, String... field);
 
 	/**
 	 * Redis Incr 命令将 key 中储存的数字值增一。 如果 key 不存在，那么 key 的值会先被初始化为 0 ，然后再执行 INCR 操作。

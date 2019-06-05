@@ -42,5 +42,18 @@ public class ContentCateController {
 		}
 
 	}
+	
+	//注意rest服务里面我配置的是/rest/...
+	@RequestMapping(value = "/sync/content/{categoryId}")
+	@ResponseBody
+	public SmResult syncContent(@PathVariable("categoryId") Long categoryId) {
+		
+		try {
+			SmResult result =contentService.syncContent(categoryId);
+			return result;
+		}catch(Exception e) {
+			return SmResult.build(500, ExceptionUtil.getStatckTrace(e));
+		}
+	}
 
 }

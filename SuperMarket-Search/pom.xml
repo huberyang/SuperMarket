@@ -9,9 +9,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>SuperMarket-Rest</artifactId>
+	<artifactId>SuperMarket-Search</artifactId>
 	<packaging>war</packaging>
-	<description>SuperMarket-Rest</description>
+	<description>SuperMarket-Search</description>
 
 	<dependencies>
 		<!--添加对于SuperMarket Mapper层的依赖，mapper层里面就已经添加了持久层框架的依赖MYbatis，所以后边不在需要添加 -->
@@ -58,25 +58,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
-		<!-- JSP相关 -->
-		<!-- jstl标签 -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-		</dependency>
-		<!-- 要用到HttpServletRequest和HttpServletResponse等对象，则需要引入servlet-api.jar -->
-		<!-- 一般在tomcat安装目录\lib 文件夹下面有，当你把web项目部署到tomcat，会自动加载这个jar包来识别Serlvet一些对象 -->
-		<!-- 而由于我们此工程将tomcat作为maven插件，则我们需要手动加入 -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
 
 		<!-- 单元测试 -->
 		<dependency>
@@ -115,11 +96,11 @@
 			<artifactId>commons-net</artifactId>
 		</dependency>
 
-		<!-- Redis客户端 -->
-		<!-- jedis是访问redis缓存的JAVA客户端 -->
+		<!-- solr客户端 -->
+		<!-- solrJ是访问Solr服务的JAVA客户端，提供索引和搜索的请求方法 -->
 		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -127,6 +108,14 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
+		    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
 			<!-- 资源文件拷贝插件 -->
 			<!-- 插件的作用 主要是处理将 主程序与 测试程序所需的资源文件复制到输出编译文件夹中 -->
 			<plugin>
@@ -160,7 +149,7 @@
 					<version>2.2</version>
 					<configuration>
 						<!--端口号 -->
-						<port>8083</port>
+						<port>8084</port>
 						<!-- 根目录 -->
 						<path>/</path>
 					</configuration>
@@ -168,6 +157,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 
 </project>

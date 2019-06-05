@@ -87,56 +87,8 @@
 	<!-- AOP指定事务的切入点 -->
 	<aop:config>
 		<aop:pointcut
-			expression="execution(* com.ncs.rest.service.*.*(..))" id="pt" />
+			expression="execution(* com.ncs.search.service.*.*(..))" id="pt" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt" />
 	</aop:config>
-
-
-	<!--缓存配置，这里使用redis|单机版我们需要配置redis的连接池|集群版，我们需要配置JedisCluster -->
-	<!--单机版jedis连接池配置 -->
-	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
-		<constructor-arg name="host" value="${redis_single_server}"></constructor-arg>
-		<constructor-arg name="port" value="${redis_single_port}"></constructor-arg>
-	</bean>
-	<!--单机jedis实现类 -->
-	<bean id="jedisClientSingle"
-		class="com.ncs.rest.component.impl.JedisClientSingle" />
-
-	<!--集群jedisCluster配置 -->
-	<!-- <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
-		<constructor-arg>
-			<set>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port1}"></constructor-arg>
-				</bean>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port2}"></constructor-arg>
-				</bean>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port3}"></constructor-arg>
-				</bean>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port4}"></constructor-arg>
-				</bean>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port5}"></constructor-arg>
-				</bean>
-				<bean class="redis.clients.jedis.HostAndPort">
-					<constructor-arg name="host" value="${redis_cluster_server}"></constructor-arg>
-					<constructor-arg name="port" value="${redis_cluster_port6}"></constructor-arg>
-				</bean>
-			</set>
-		</constructor-arg>
-	</bean> -->
-
-	<!--集群jedis实现类 -->
-	<!-- <bean id="jedisClientCluster"
-		class="com.ncs.rest.component.impl.JedisClientCluster" /> -->
-
 
 </beans>

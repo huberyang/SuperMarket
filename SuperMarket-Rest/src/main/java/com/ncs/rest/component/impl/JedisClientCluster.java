@@ -33,9 +33,14 @@ public class JedisClientCluster implements JedisClient {
 	}
 
 	@Override
-	public String hget(String key, String item) {
+	public String hget(String key, String field) {
 
-		return jedisCluster.hget(key, item);
+		return jedisCluster.hget(key, field);
+	}
+	
+	@Override
+	public Long hdel(String key, String... field) {
+		return jedisCluster.hdel(key, field);
 	}
 
 	@Override
@@ -96,5 +101,6 @@ public class JedisClientCluster implements JedisClient {
 	public Long ttl(String key) {
 		return jedisCluster.ttl(key);
 	}
+
 
 }

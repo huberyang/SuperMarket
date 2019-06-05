@@ -2,6 +2,7 @@ package com.ncs.service;
 
 import com.ncs.common.pojo.EasyDataGridResult;
 import com.ncs.common.pojo.SmResult;
+import com.ncs.pojo.TbContent;
 import com.ncs.vo.ContentCateVO;
 
 public interface ContentService {
@@ -41,5 +42,10 @@ public interface ContentService {
 	 * @throws Exception
 	 */
 	SmResult deleteContent(Long[] ids) throws Exception;
+
+	
+	TbContent findContentById(Long id)throws Exception;
+	
+	
 
 }

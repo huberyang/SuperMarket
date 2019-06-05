@@ -19,7 +19,7 @@ import com.ncs.vo.ContentCateVO;
 
 @Service
 public class ContentServiceImpl implements ContentService {
-
+	
 	@Autowired
 	private TbContentMapper tbContentMapper;
 
@@ -68,7 +68,7 @@ public class ContentServiceImpl implements ContentService {
 		record.setUpdated(new Date());
 
 		tbContentMapper.updateByExampleSelective(record, example);
-
+		
 		return SmResult.ok();
 	}
 
@@ -104,6 +104,22 @@ public class ContentServiceImpl implements ContentService {
 			tbContentMapper.deleteByExample(example);
 		}
 		return SmResult.ok();
+	}
+
+	@Override
+	public TbContent findContentById(Long id) {
+		
+		TbContentExample example = new TbContentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andIdEqualTo(id);
+		List<TbContent> result = tbContentMapper.selectByExample(example);
+		
+		if(result!=null) {
+			TbContent content= result.iterator().next();
+			return content;
+		}
+		
+		return null;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.ncs.rest.service;
 
 import java.util.List;
 
+import com.ncs.common.pojo.SmResult;
 import com.ncs.pojo.TbContent;
 
 public interface ContentService {
@@ -14,5 +15,12 @@ public interface ContentService {
 	 * @throws Exception
 	 */
 	public List<TbContent> getContentList(Long categoryId) throws Exception;
+	
+	/**
+	 * 同步缓存数据
+	 * @param categoryId
+	 * @return
+	 */
+	SmResult syncContent(Long categoryId);
 
 }

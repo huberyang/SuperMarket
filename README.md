@@ -8,3 +8,5 @@ SuperMarket-Manager
 SuperMarket-Rest
 //门户
 SuperMarket-Portal
+//Rest Search
+SuperMarket-Search

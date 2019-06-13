@@ -15,7 +15,7 @@ public interface JedisClient {
 	 * 232 - 1 键值对（40多亿）
 	 * 
 	 * @param key
-	 * @param item
+	 * @param filed
 	 * @param value
 	 * @return
 	 */

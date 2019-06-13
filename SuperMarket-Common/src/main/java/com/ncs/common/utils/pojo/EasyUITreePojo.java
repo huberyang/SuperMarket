@@ -1,4 +1,4 @@
-package com.ncs.common.pojo;
+package com.ncs.common.utils.pojo;
 
 public class EasyUITreePojo {
 

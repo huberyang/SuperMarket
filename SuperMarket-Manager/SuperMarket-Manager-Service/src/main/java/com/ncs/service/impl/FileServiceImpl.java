@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ncs.common.pojo.PicResult;
+import com.ncs.common.utils.pojo.PicResult;
 import com.ncs.common.utils.FastDFSClient;
 import com.ncs.service.FileService;
 

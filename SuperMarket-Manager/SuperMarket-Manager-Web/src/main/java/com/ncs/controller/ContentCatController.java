@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ncs.common.pojo.EasyUITreePojo;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyUITreePojo;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.service.ContentCatService;
 
 /**

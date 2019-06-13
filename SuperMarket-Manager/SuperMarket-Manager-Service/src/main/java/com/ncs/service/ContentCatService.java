@@ -2,8 +2,8 @@ package com.ncs.service;
 
 import java.util.List;
 
-import com.ncs.common.pojo.EasyUITreePojo;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyUITreePojo;
+import com.ncs.common.utils.pojo.SmResult;
 
 public interface ContentCatService {
 

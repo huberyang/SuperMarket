@@ -2,7 +2,7 @@ package com.ncs.rest.service;
 
 import java.util.List;
 
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.pojo.TbContent;
 
 public interface ContentService {

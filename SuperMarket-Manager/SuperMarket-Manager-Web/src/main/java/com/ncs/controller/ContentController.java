@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ncs.common.pojo.EasyDataGridResult;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyDataGridResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.pojo.TbContent;
 import com.ncs.service.ContentService;

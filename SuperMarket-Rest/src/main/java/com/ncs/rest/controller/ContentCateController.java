@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.ExceptionUtil;
 import com.ncs.pojo.TbContent;
 import com.ncs.rest.service.ContentService;

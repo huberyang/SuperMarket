@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ncs.common.pojo.AdNode;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.AdNode;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.pojo.TbContent;

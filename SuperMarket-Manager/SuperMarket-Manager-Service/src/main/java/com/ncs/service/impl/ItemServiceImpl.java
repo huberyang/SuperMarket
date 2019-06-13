@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ncs.common.pojo.EasyDataGridResult;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyDataGridResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.IDUtils;
 import com.ncs.mapper.TbItemDescMapper;
 import com.ncs.mapper.TbItemMapper;
@@ -19,7 +19,6 @@ import com.ncs.pojo.TbItemDesc;
 import com.ncs.pojo.TbItemDescExample;
 import com.ncs.pojo.TbItemExample;
 import com.ncs.pojo.TbItemExample.Criteria;
-import com.ncs.pojo.TbItemParamExample;
 import com.ncs.pojo.TbItemParamItem;
 import com.ncs.pojo.TbItemParamItemExample;
 import com.ncs.service.ItemService;

@@ -1,7 +1,7 @@
 package com.ncs.service;
 
-import com.ncs.common.pojo.EasyDataGridResult;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyDataGridResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.pojo.TbContent;
 import com.ncs.vo.ContentCateVO;
 

@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ncs.common.pojo.EasyUITreePojo;
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.EasyUITreePojo;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.mapper.TbContentCategoryMapper;
 import com.ncs.pojo.TbContentCategory;
 import com.ncs.pojo.TbContentCategoryExample;

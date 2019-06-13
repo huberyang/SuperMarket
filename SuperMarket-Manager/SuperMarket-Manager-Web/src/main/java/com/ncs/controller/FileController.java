@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ncs.common.pojo.PicResult;
+import com.ncs.common.utils.pojo.PicResult;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.service.FileService;
 

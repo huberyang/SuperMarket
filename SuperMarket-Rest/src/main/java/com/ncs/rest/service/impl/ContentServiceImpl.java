@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.ncs.common.pojo.SmResult;
+import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.mapper.TbContentMapper;
 import com.ncs.pojo.TbContent;

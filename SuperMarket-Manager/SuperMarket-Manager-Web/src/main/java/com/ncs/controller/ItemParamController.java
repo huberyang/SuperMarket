@@ -1,15 +1,22 @@
 package com.ncs.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.sql.ast.expr.SQLCaseExpr.Item;
+import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.pojo.EasyDataGridResult;
 import com.ncs.common.utils.pojo.SmResult;
+import com.ncs.pojo.TbItem;
 import com.ncs.service.ItemParamService;
+import com.ncs.service.ItemService;
 
 /**
  * 
@@ -27,8 +34,14 @@ import com.ncs.service.ItemParamService;
 @RequestMapping("/item")
 public class ItemParamController {
 
+	@Value("${rest_service_base_url}")
+	private String rest_service_base_url;
+	@Value("${rest_sync_itemParamItem_url}")
+	private String rest_sync_itemParamItem_url;
 	@Autowired
 	private ItemParamService itemParamService;
+	@Autowired
+	private ItemService itemService;
 
 	/**
 	 * 查询商品规格模板，及其所对应的商品类目
@@ -59,6 +72,10 @@ public class ItemParamController {
 	public SmResult deleteItemParamById(Long[] ids) throws Exception {
 
 		SmResult result = itemParamService.deleteItemParamByIds(ids);
+		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+		for(int i=0;i<ids.length;i++) {
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + ids[i]);
+		}
 		return result;
 	}
 
@@ -84,12 +101,21 @@ public class ItemParamController {
 	 * @param cId
 	 * @param paramData
 	 * @return
+	 * @throws Exception 
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/param/save/{cId}", method = RequestMethod.POST)
-	public SmResult saveItemParamForCat(@PathVariable("cId") Long cId, String paramData) {
+	public SmResult saveItemParamForCat(@PathVariable("cId") Long cId, String paramData) throws Exception {
 
 		SmResult result = itemParamService.saveItemParamForCat(cId, paramData);
+		// 查询当前类别下的所有商品ID，清除这些商品ID缓存
+		List<TbItem> itemList = itemService.findItemByCateId(cId);
+		if (itemList != null && !itemList.isEmpty()) {
+			for (TbItem item : itemList) {
+				// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+				HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + item.getId());
+			}
+		}
 		return result;
 	}
 
@@ -99,12 +125,21 @@ public class ItemParamController {
 	 * @param cId
 	 * @param paramData
 	 * @return
+	 * @throws Exception
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/param/update/{cId}", method = RequestMethod.POST)
-	public SmResult updateItemParamForCat(@PathVariable("cId") Long cId, String paramData) {
-		
+	public SmResult updateItemParamForCat(@PathVariable("cId") Long cId, String paramData) throws Exception {
+
 		SmResult result = itemParamService.updateItemParamForCat(cId, paramData);
+		// 查询当前类别下的所有商品ID，清除这些商品ID缓存
+		List<TbItem> itemList = itemService.findItemByCateId(cId);
+		if (itemList != null && !itemList.isEmpty()) {
+			for (TbItem item : itemList) {
+				// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+				HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + item.getId());
+			}
+		}
 		return result;
 	}
 
@@ -120,7 +155,6 @@ public class ItemParamController {
 	public SmResult getItemParams(@PathVariable("itemId") Long itemId) throws Exception {
 
 		SmResult result = itemParamService.getItemParams(itemId);
-
 		return result;
 	}
 

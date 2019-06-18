@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ncs.common.utils.JsonUtils;
 import com.ncs.mapper.TbItemCatMapper;
 import com.ncs.pojo.TbItemCat;
 import com.ncs.pojo.TbItemCatExample;
 import com.ncs.pojo.TbItemCatExample.Criteria;
+import com.ncs.rest.component.JedisClient;
 import com.ncs.rest.pojo.CatNode;
 import com.ncs.rest.pojo.ItemCatResult;
 import com.ncs.rest.service.ItemCatService;
@@ -28,9 +31,13 @@ import com.ncs.rest.service.ItemCatService;
 
 @Service
 public class ItemCatServiceImpl implements ItemCatService {
-
+	
+	@Value("${redis_item_cate_key}")
+	private String redis_item_cate_key;
 	@Autowired
 	private TbItemCatMapper tbItemCatMapper;
+	@Autowired
+	private JedisClient jedisClient;
 
 	/**
 	 * 查询商品分类信息
@@ -51,6 +58,14 @@ public class ItemCatServiceImpl implements ItemCatService {
 	 * @return
 	 */
 	private List<CatNode> findItemCat(Long parentId) {
+		
+		
+		//从redis缓存中查询是否存在分类数据
+		String result = jedisClient.hget(redis_item_cate_key, parentId+"");
+		if(result!=null) {
+			return JsonUtils.jsonToList(result, CatNode.class);
+		}
+		
 		// 根据父节点查询子节点
 		TbItemCatExample example = new TbItemCatExample();
 		Criteria criteria = example.createCriteria();
@@ -83,7 +98,9 @@ public class ItemCatServiceImpl implements ItemCatService {
 				resultList.add(item);
 			}
 		}
-
+		
+		//保存分类数据到redis缓存中
+		jedisClient.hset(redis_item_cate_key, parentId+"", JsonUtils.objectToJson(resultList));
 		return resultList;
 	}
 

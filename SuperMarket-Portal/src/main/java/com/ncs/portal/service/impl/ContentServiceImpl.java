@@ -1,4 +1,4 @@
-package com.ncs.portal.service;
+package com.ncs.portal.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.pojo.TbContent;
+import com.ncs.portal.service.ContentService;
 
 @Service
 public class ContentServiceImpl implements ContentService {

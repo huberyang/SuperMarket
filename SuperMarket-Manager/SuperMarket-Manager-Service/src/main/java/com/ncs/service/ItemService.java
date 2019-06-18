@@ -1,5 +1,7 @@
 package com.ncs.service;
 
+import java.util.List;
+
 import com.ncs.common.utils.pojo.EasyDataGridResult;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.pojo.TbItem;
@@ -67,7 +69,7 @@ public interface ItemService {
 	 * @param ids
 	 * @return
 	 */
-	SmResult queryItemDesc(Long itemId);
+	SmResult queryItemDesc(Long itemId) throws Exception;
 
 	/**
 	 * 查询商品规格模板参数信息
@@ -75,7 +77,7 @@ public interface ItemService {
 	 * @param ids
 	 * @return
 	 */
-	SmResult queryItemParam(Long itemId);
+	SmResult queryItemParam(Long itemId) throws Exception;
 
 	/**
 	 * 更新商品详细信息
@@ -85,6 +87,15 @@ public interface ItemService {
 	 * @param itemParams
 	 * @return
 	 */
-	SmResult updateItem(TbItem item, String desc, String itemParams);
+	SmResult updateItem(TbItem item, String desc, String itemParams) throws Exception;
+
+	/**
+	 * 根据商品类别查询对应的商品列表数据
+	 * 
+	 * @param cateId
+	 * @return
+	 * @throws Exception
+	 */
+	List<TbItem> findItemByCateId(Long cateId) throws Exception;
 
 }

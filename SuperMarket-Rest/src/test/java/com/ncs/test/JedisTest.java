@@ -3,11 +3,10 @@ package com.ncs.test;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
-import org.springframework.aop.ThrowsAdvice;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import com.ncs.rest.component.JedisClient;
 
@@ -90,9 +89,17 @@ public class JedisTest {
 		ApplicationContext context=new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
         //从容器中获取JedisClient对象
 		JedisClient client = context.getBean(JedisClient.class);
-		client.set("country", "China");
-		String result = client.get("country");
+		String result = client.hget("redis_tbItemParamItem_key", "155620608526913");
 		System.out.println(result);
+	}
+	
+	@Test 
+	public void testStringBlank() {
+		System.out.println(StringUtils.isBlank(null));
+		System.out.println(StringUtils.isBlank(""));
+		System.out.println(StringUtils.isBlank("111"));
+		
+		
 		
 	}
 	

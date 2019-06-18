@@ -157,7 +157,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public SmResult queryItemDesc(Long itemId) {
+	public SmResult queryItemDesc(Long itemId)throws Exception {
 
 		TbItemDescExample example = new TbItemDescExample();
 		com.ncs.pojo.TbItemDescExample.Criteria criteria = example.createCriteria();
@@ -183,7 +183,7 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public SmResult updateItem(TbItem item, String desc, String itemParams) {
+	public SmResult updateItem(TbItem item, String desc, String itemParams) throws Exception{
 
 		Date date = new Date();
 		// 先更新商品
@@ -229,5 +229,16 @@ public class ItemServiceImpl implements ItemService {
 		}
 
 		return SmResult.ok();
+	}
+
+	@Override
+	public List<TbItem> findItemByCateId(Long cateId) throws Exception {
+		
+		TbItemExample example = new TbItemExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCidEqualTo(cateId);
+		List<TbItem> list = itemMapper.selectByExample(example);
+		
+		return list;
 	}
 }

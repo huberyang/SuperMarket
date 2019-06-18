@@ -1,12 +1,14 @@
 package com.ncs.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.pojo.EasyDataGridResult;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.pojo.TbItem;
@@ -26,6 +28,10 @@ import com.ncs.service.ItemService;
 @Controller
 public class ItemController {
 
+	@Value("${rest_service_base_url}")
+	private String rest_service_base_url;
+	@Value("${rest_sync_item_url}")
+	private String rest_sync_item_url;
 	@Autowired
 	private ItemService itemService;
 
@@ -75,6 +81,8 @@ public class ItemController {
 	@RequestMapping(value = "/item/save", method = RequestMethod.POST)
 	public SmResult createItem(TbItem item, String desc, String itemParams) throws Exception {
 		SmResult result = itemService.createItem(item, desc, itemParams);
+		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
 		return result;
 	}
 
@@ -89,6 +97,10 @@ public class ItemController {
 	@RequestMapping(value = "/rest/item/delete", method = RequestMethod.POST)
 	public SmResult deleteItem(Long[] ids) throws Exception {
 		SmResult result = itemService.deleteItem(ids);
+		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+		for (int i = 0; i < ids.length; i++) {
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+		}
 		return result;
 	}
 
@@ -103,6 +115,11 @@ public class ItemController {
 	@RequestMapping(value = "/rest/item/outstock", method = RequestMethod.POST)
 	public SmResult outstockItem(Long[] ids) throws Exception {
 		SmResult result = itemService.outstockItem(ids);
+		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+		for (int i = 0; i < ids.length; i++) {
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+		}
+
 		return result;
 	}
 
@@ -157,8 +174,9 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/rest/item/update", method = RequestMethod.POST)
 	public SmResult updateItemDetails(TbItem item, String desc, String itemParams) throws Exception {
-		
 		SmResult result = itemService.updateItem(item, desc, itemParams);
+		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
 		return result;
 
 	}

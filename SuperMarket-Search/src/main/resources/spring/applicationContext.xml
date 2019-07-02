@@ -25,6 +25,17 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.*"></context:component-scan>
 
+	<!--单机版solr注册 -->
+	<bean id="httpSolrClient"
+		class="org.apache.solr.client.solrj.impl.HttpSolrClient">
+		<constructor-arg ref="builder" />
+	</bean>
+	<bean id="builder"
+		class="org.apache.solr.client.solrj.impl.HttpSolrClient.Builder">
+		<constructor-arg name="baseSolrUrl"
+			value="${solr_single_base_url}" />
+	</bean>
+
 	<!--加载数据源 -->
 	<!-- 加载数据源之前先加载数据源properties配置文件,jdbc.properties被放在了properties目录下被统一加载 -->
 	<!-- <context:property-placeholder location="classpath:properties/*.properties"/> -->
@@ -51,10 +62,10 @@
 		<property name="configLocation"
 			value="classpath:mybatis/sqlMapConfig.xml" />
 	</bean>
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.ncs.mapper" />
-	</bean>
 
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.ncs.search.mapper" />
+	</bean>
 
 	<!--事务配置 -->
 	<!-- 配置事务管理器 -->
@@ -65,7 +76,7 @@
 	<!-- 配置事务增强（对哪些方法使用事务？使用事务的策略） -->
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-		    <!--增删改操作必须添加事务处理，否则容易出现数据混乱  -->
+			<!--增删改操作必须添加事务处理，否则容易出现数据混乱 -->
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="add*" propagation="REQUIRED" />

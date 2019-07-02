@@ -1,5 +1,6 @@
 package com.ncs.test;
 
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.github.pagehelper.StringUtil;
 import com.ncs.rest.component.JedisClient;
 
 import redis.clients.jedis.HostAndPort;
@@ -99,7 +101,7 @@ public class JedisTest {
 		System.out.println(StringUtils.isBlank(""));
 		System.out.println(StringUtils.isBlank("111"));
 		
-		
+		System.out.println(Long.parseLong("999900000000"));
 		
 	}
 	

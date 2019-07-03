@@ -1,4 +1,4 @@
-package com.ncs.search.service;
+package com.ncs.search.service.impl;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.search.mapper.ItemMapper;
 import com.ncs.search.pojo.SearchItem;
+import com.ncs.search.service.ItemService;
+
 @Service
 public class ItemServiceImpl implements ItemService {
 
@@ -18,7 +20,7 @@ public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	private ItemMapper itemMapper;
-    
+
 	@Override
 	public SmResult importAllData() throws Exception {
 
@@ -30,11 +32,11 @@ public class ItemServiceImpl implements ItemService {
 			// 创建solr文档对象
 			SolrInputDocument document = new SolrInputDocument();
 			document.setField("id", item.getId());
-			document.setField("title", item.getTitle());
-			document.setField("sell_point", item.getSell_point());
-			document.setField("price", item.getPrice());
-			document.setField("image", item.getImage());
-			document.setField("category_name", item.getCategory_name());
+			document.setField("item_title", item.getTitle());
+			document.setField("item_sell_point", item.getSell_point());
+			document.setField("item_price", item.getPrice());
+			document.setField("item_image", item.getImage());
+			document.setField("item_category_name", item.getCategory_name());
 			document.setField("item_desc", item.getItem_desc());
 			// 添加到索引库
 			httpSolrClient.add(document);

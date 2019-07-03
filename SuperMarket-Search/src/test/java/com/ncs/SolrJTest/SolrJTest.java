@@ -12,6 +12,8 @@ import org.apache.solr.common.SolrInputDocument;
 import org.apache.solr.common.params.MapSolrParams;
 import org.junit.Test;
 
+
+
 public class SolrJTest {
 
 	private String solrUrl = "http://192.168.28.130:8080/solr/new_core";
@@ -101,7 +103,7 @@ public class SolrJTest {
 		HttpSolrClient solrClient = new HttpSolrClient.Builder(solrUrl).withConnectionTimeout(10000)
 				.withSocketTimeout(60000).build();
 		Map<String, String> map=new HashMap<>();
-		map.put("q", "item_title:app*");
+		map.put("q", "item_title:三星");
 		MapSolrParams params=new MapSolrParams(map);
 		QueryResponse response = solrClient.query(params);
 		// 遍历查询结果

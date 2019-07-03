@@ -1,4 +1,4 @@
-package com.ncs.search.pojo;
+package com.ncs.portal.pojo;
 
 import java.io.Serializable;
 

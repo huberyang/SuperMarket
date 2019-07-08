@@ -32,6 +32,15 @@ public class ItemController {
 	private String rest_service_base_url;
 	@Value("${rest_sync_item_url}")
 	private String rest_sync_item_url;
+	@Value("${search_base_url}")
+	private String search_base_url;
+	@Value("${item_index_reimport}")
+	private String item_index_reimport;
+	@Value("${sync_item_index_del}")
+	private String sync_item_index_del;
+	@Value("${sync_item_index_add}")
+	private String sync_item_index_add;
+
 	@Autowired
 	private ItemService itemService;
 
@@ -83,6 +92,9 @@ public class ItemController {
 		SmResult result = itemService.createItem(item, desc, itemParams);
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
+		
+		// 更新操作结束后，执行数据同步操作，更新索引库数据
+		HttpClientUtils.doGet(search_base_url + sync_item_index_add);
 		return result;
 	}
 
@@ -100,7 +112,10 @@ public class ItemController {
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+			// 更新操作结束后，执行数据同步操作，更新索引库数据
+			HttpClientUtils.doGet(search_base_url + sync_item_index_del+ids[i]);
 		}
+
 		return result;
 	}
 
@@ -118,8 +133,10 @@ public class ItemController {
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+			// 更新操作结束后，执行数据同步操作，更新索引库数据
+			HttpClientUtils.doGet(search_base_url + sync_item_index_del+ids[i]);
 		}
-
+		
 		return result;
 	}
 
@@ -134,6 +151,9 @@ public class ItemController {
 	@RequestMapping(value = "/rest/item/reshelf", method = RequestMethod.POST)
 	public SmResult reshelfItem(Long[] ids) throws Exception {
 		SmResult result = itemService.reshelfItem(ids);
+		
+		// 更新操作结束后，执行数据同步操作，更新索引库数据
+		HttpClientUtils.doGet(search_base_url + sync_item_index_add+ids);
 		return result;
 	}
 

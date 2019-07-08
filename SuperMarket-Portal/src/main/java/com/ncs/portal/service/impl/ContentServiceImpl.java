@@ -3,6 +3,7 @@ package com.ncs.portal.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.pojo.TbContent;
+import com.ncs.pojo.TbItem;
 import com.ncs.portal.service.ContentService;
 
 @Service
@@ -22,6 +24,8 @@ public class ContentServiceImpl implements ContentService {
 	private String rest_server_content_url;
 	@Value("${ad_content_category}")
 	private String ad_content_category;
+	@Value("${rest_server_item_url}")
+	private String rest_server_item_url;
 
 	@Override
 	public String getBigADList() {
@@ -55,8 +59,21 @@ public class ContentServiceImpl implements ContentService {
 			// 将结果转化为json 数据
 			jsonResult = JsonUtils.objectToJson(resultList);
 		}
-		
+
 		return jsonResult;
+	}
+
+	@Override
+	public TbItem getItemById(String itemId) throws Exception {
+		TbItem item = null;
+		// httpClient请求rest 服务
+		String url = rest_server_url + rest_server_item_url+itemId;
+		String smJson = HttpClientUtils.doGet(url);
+		if (smJson != "") {
+			SmResult result = SmResult.formatToList(smJson, TbItem.class);
+			item = (TbItem) result.getData();
+		}
+		return item;
 	}
 
 }

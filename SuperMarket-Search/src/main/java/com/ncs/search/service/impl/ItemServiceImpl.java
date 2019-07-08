@@ -2,12 +2,17 @@ package com.ncs.search.service.impl;
 
 import java.util.List;
 
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ncs.common.utils.pojo.SmResult;
+import com.ncs.pojo.TbItem;
 import com.ncs.search.mapper.ItemMapper;
 import com.ncs.search.pojo.SearchItem;
 import com.ncs.search.service.ItemService;
@@ -47,6 +52,30 @@ public class ItemServiceImpl implements ItemService {
 
 		return SmResult.ok();
 
+	}
+
+	@Override
+	public SmResult delItemIndex(Long[] ids) throws Exception {
+
+		// 创建solr查询对象
+		SolrQuery query = new SolrQuery();
+		// 设置查询条件,这个条件是查询所有
+		query.setQuery("*:*");
+		QueryResponse response = httpSolrClient.query(query);
+		SolrDocumentList results = response.getResults();
+		for (SolrDocument document : results) {
+			httpSolrClient.deleteById((String) document.getFieldValue("id"));
+		}
+
+		httpSolrClient.commit();
+
+		return SmResult.ok();
+	}
+
+	@Override
+	public SmResult addItemIndex(TbItem item) throws Exception {
+
+		return SmResult.ok();
 	}
 
 }

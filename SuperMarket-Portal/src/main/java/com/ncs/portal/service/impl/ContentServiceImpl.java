@@ -2,6 +2,7 @@ package com.ncs.portal.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -101,7 +102,35 @@ public class ContentServiceImpl implements ContentService {
 		if (smJson != "") {
 			tbItemParamItem = new TbItemParamItem();
 			SmResult result = SmResult.formatToPojo(smJson, TbItemParamItem.class);
-			tbItemParamItem = (TbItemParamItem) result.getData();
+			
+			//取出规格参数
+			 tbItemParamItem = (TbItemParamItem) result.getData();
+			String paramJson = tbItemParamItem.getParamData();
+			// 把规格参数的json数据转换成java对象
+			// 转换成java对象
+			List<Map> mapList = JsonUtils.jsonToList(paramJson, Map.class);
+			// 遍历list生成html
+			StringBuffer sb = new StringBuffer();
+
+			sb.append("<table cellpadding=\"0\" cellspacing=\"1\" width=\"100%\" border=\"0\" class=\"Ptable\">\n");
+			sb.append("	<tbody>\n");
+			for (Map map : mapList) {
+				sb.append("		<tr>\n");
+				sb.append("			<th class=\"tdTitle\" colspan=\"2\">" + map.get("group") + "</th>\n");
+				sb.append("		</tr>\n");
+				// 取规格项
+				List<Map> mapList2 = (List<Map>) map.get("params");
+				for (Map map2 : mapList2) {
+					sb.append("		<tr>\n");
+					sb.append("			<td class=\"tdTitle\">" + map2.get("k") + "</td>\n");
+					sb.append("			<td>" + map2.get("v") + "</td>\n");
+					sb.append("		</tr>\n");
+				}
+			}
+			sb.append("	</tbody>\n");
+			sb.append("</table>");
+
+			tbItemParamItem.setParamData(sb.toString());
 		}
 
 		return tbItemParamItem;

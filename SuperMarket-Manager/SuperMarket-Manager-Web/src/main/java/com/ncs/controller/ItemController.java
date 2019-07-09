@@ -94,7 +94,7 @@ public class ItemController {
 		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
 		
 		// 更新操作结束后，执行数据同步操作，更新索引库数据
-		HttpClientUtils.doGet(search_base_url + sync_item_index_add);
+		HttpClientUtils.doGet(search_base_url + sync_item_index_add +item.getId());
 		return result;
 	}
 
@@ -112,8 +112,9 @@ public class ItemController {
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+			
 			// 更新操作结束后，执行数据同步操作，更新索引库数据
-			HttpClientUtils.doGet(search_base_url + sync_item_index_del+ids[i]);
+			HttpClientUtils.doGet(search_base_url + sync_item_index_del + ids[i]);
 		}
 
 		return result;
@@ -133,10 +134,11 @@ public class ItemController {
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+			
 			// 更新操作结束后，执行数据同步操作，更新索引库数据
-			HttpClientUtils.doGet(search_base_url + sync_item_index_del+ids[i]);
+			HttpClientUtils.doGet(search_base_url + sync_item_index_del + ids[i]);
 		}
-		
+
 		return result;
 	}
 
@@ -151,9 +153,12 @@ public class ItemController {
 	@RequestMapping(value = "/rest/item/reshelf", method = RequestMethod.POST)
 	public SmResult reshelfItem(Long[] ids) throws Exception {
 		SmResult result = itemService.reshelfItem(ids);
-		
-		// 更新操作结束后，执行数据同步操作，更新索引库数据
-		HttpClientUtils.doGet(search_base_url + sync_item_index_add+ids);
+
+		for (int i = 0; i < ids.length; i++) {
+			// 更新操作结束后，执行数据同步操作，更新索引库数据
+			HttpClientUtils.doGet(search_base_url + sync_item_index_add + ids[i]);
+		}
+
 		return result;
 	}
 

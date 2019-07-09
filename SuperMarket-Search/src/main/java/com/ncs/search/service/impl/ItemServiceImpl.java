@@ -60,7 +60,9 @@ public class ItemServiceImpl implements ItemService {
 		// 创建solr查询对象
 		SolrQuery query = new SolrQuery();
 		// 设置查询条件,这个条件是查询所有
-		query.setQuery("*:*");
+		for (Long id : ids) {
+			query.setQuery("id:" + id);
+		}
 		QueryResponse response = httpSolrClient.query(query);
 		SolrDocumentList results = response.getResults();
 		for (SolrDocument document : results) {
@@ -68,13 +70,24 @@ public class ItemServiceImpl implements ItemService {
 		}
 
 		httpSolrClient.commit();
-
 		return SmResult.ok();
 	}
 
 	@Override
 	public SmResult addItemIndex(TbItem item) throws Exception {
 
+		// 创建一个文档对象
+		SolrInputDocument document = new SolrInputDocument();
+		// 添加域
+		document.setField("id", item.getId());
+		document.setField("item_title", item.getTitle());
+		document.setField("item_sell_point", item.getSellPoint());
+		document.setField("item_price", item.getPrice());
+		document.setField("item_image", item.getImage());
+		// 添加到索引库
+		httpSolrClient.add(document);
+		// 提交
+		httpSolrClient.commit();
 		return SmResult.ok();
 	}
 

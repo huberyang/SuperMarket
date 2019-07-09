@@ -1,10 +1,13 @@
 package com.ncs.portal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ncs.pojo.TbItemDesc;
 import com.ncs.pojo.TbItemParamItem;
@@ -49,19 +52,20 @@ public class IndexController {
 		return "item";
 	}
 
-
-	@RequestMapping("/item/param/{itemId}")
-	public void showItemParam(Model model, @PathVariable("itemId") String itemId) throws Exception {
-		// 根据商品id查询对应的商品信息
-		TbItemParamItem result = contentService.getItemParamById(itemId);
-		 model.addAttribute("itemParam", result);
+	@RequestMapping(value="/item/param/{itemId}",produces=MediaType.TEXT_HTML_VALUE+";charset=utf-8")
+	@ResponseBody
+	public String showItemParam(Model model, @PathVariable("itemId") String itemId) throws Exception {
+		 // 根据商品id查询对应的商品信息
+		 TbItemParamItem result = contentService.getItemParamById(itemId);
+		 return result.getParamData();
 	}
 	
-	@RequestMapping("/item/desc/{itemId}")
-	public void showItemDesc(Model model, @PathVariable("itemId") String itemId) throws Exception {
-		// 根据商品id查询对应的商品信息
+	@RequestMapping(value="/item/desc/{itemId}",produces=MediaType.TEXT_HTML_VALUE+";charset=utf-8")
+	@ResponseBody
+	public String showItemDesc(Model model, @PathVariable("itemId") String itemId) throws Exception {
+		 // 根据商品id查询对应的商品信息
 		 TbItemDesc result = contentService.getItemDescById(itemId);
-		 model.addAttribute("itemDesc", result);
+		 return result.getItemDesc();
 	}
 
 

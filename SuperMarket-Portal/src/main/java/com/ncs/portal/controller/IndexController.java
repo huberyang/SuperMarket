@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ncs.pojo.TbItem;
+import com.ncs.pojo.TbItemDesc;
+import com.ncs.pojo.TbItemParamItem;
+import com.ncs.portal.pojo.ItemDeatils;
 import com.ncs.portal.service.ContentService;
 
 @Controller
@@ -36,13 +38,31 @@ public class IndexController {
 		model.addAttribute("ad1", result);
 		return "index";
 	}
+	
 
+	
 	@RequestMapping("/item/{itemId}")
 	public String showItemPage(Model model, @PathVariable("itemId") String itemId) throws Exception {
 		// 根据商品id查询对应的商品信息
-		 TbItem result = contentService.getItemById(itemId);
+		 ItemDeatils result = contentService.getItemById(itemId);
 		 model.addAttribute("item", result);
 		return "item";
 	}
+
+
+	@RequestMapping("/item/param/{itemId}")
+	public void showItemParam(Model model, @PathVariable("itemId") String itemId) throws Exception {
+		// 根据商品id查询对应的商品信息
+		TbItemParamItem result = contentService.getItemParamById(itemId);
+		 model.addAttribute("itemParam", result);
+	}
+	
+	@RequestMapping("/item/desc/{itemId}")
+	public void showItemDesc(Model model, @PathVariable("itemId") String itemId) throws Exception {
+		// 根据商品id查询对应的商品信息
+		 TbItemDesc result = contentService.getItemDescById(itemId);
+		 model.addAttribute("itemDesc", result);
+	}
+
 
 }

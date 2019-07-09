@@ -34,8 +34,8 @@ public class ItemController {
 	private String rest_sync_item_url;
 	@Value("${search_base_url}")
 	private String search_base_url;
-	@Value("${item_index_reimport}")
-	private String item_index_reimport;
+	@Value("${sync_item_index_reimport}")
+	private String sync_item_index_reimport;
 	@Value("${sync_item_index_del}")
 	private String sync_item_index_del;
 	@Value("${sync_item_index_add}")

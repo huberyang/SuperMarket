@@ -104,7 +104,7 @@ public class ItemController {
 	 * @param itemId
 	 * @return
 	 */
-	@RequestMapping(value = "sync/item/{itemId}")
+	@RequestMapping(value = "/sync/item/{itemId}")
 	@ResponseBody
 	public SmResult syncItem(@PathVariable("itemId") Long itemId) {
 		// 查询缓存中是否存在该ID的缓存数据，如果存在则删除
@@ -124,7 +124,7 @@ public class ItemController {
 	 * @param itemId
 	 * @return
 	 */
-	@RequestMapping(value = "sync/desc/{itemId}")
+	@RequestMapping(value = "/sync/desc/{itemId}")
 	@ResponseBody
 	public SmResult syncItemDesc(@PathVariable("itemId") Long itemId) {
 		// 查询缓存中是否存在该ID的缓存数据，如果存在则删除
@@ -144,7 +144,7 @@ public class ItemController {
 	 * @param itemId
 	 * @return
 	 */
-	@RequestMapping(value = "sync/itemParamItem/{itemId}")
+	@RequestMapping(value = "/sync/itemParamItem/{itemId}")
 	@ResponseBody
 	public SmResult syncItemParamItem(@PathVariable("itemId") Long itemId) {
 		// 查询缓存中是否存在该ID的缓存数据，如果存在则删除

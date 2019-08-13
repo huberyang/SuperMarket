@@ -72,7 +72,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public ItemDeatils getItemById(String itemId) throws Exception {
+	public ItemDeatils getItemById(Long itemId) throws Exception {
 		ItemDeatils item = new ItemDeatils();
 		// httpClient请求rest 服务
 		String url = rest_server_url + rest_server_item_base_url + itemId;
@@ -93,7 +93,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public TbItemParamItem getItemParamById(String itemId) throws Exception {
+	public TbItemParamItem getItemParamById(Long itemId) throws Exception {
 		TbItemParamItem tbItemParamItem = null;
 
 		// httpClient请求rest 服务
@@ -137,7 +137,7 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public TbItemDesc getItemDescById(String itemId) throws Exception {
+	public TbItemDesc getItemDescById(Long itemId) throws Exception {
 
 		TbItemDesc tbItemDesc = null;
 		// httpClient请求rest 服务

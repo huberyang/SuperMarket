@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ncs.common.utils.HttpClientUtils;
+import com.ncs.common.utils.JsonUtils;
 import com.ncs.common.utils.pojo.EasyDataGridResult;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.pojo.TbItem;
@@ -32,6 +33,10 @@ public class ItemController {
 	private String rest_service_base_url;
 	@Value("${rest_sync_item_url}")
 	private String rest_sync_item_url;
+	@Value("${rest_sync_itemDesc_url}")
+	private String rest_sync_itemDesc_url;
+	@Value("${rest_sync_itemParamItem_url}")
+	private String rest_sync_itemParamItem_url;
 	@Value("${search_base_url}")
 	private String search_base_url;
 	@Value("${sync_item_index_reimport}")
@@ -40,6 +45,11 @@ public class ItemController {
 	private String sync_item_index_del;
 	@Value("${sync_item_index_add}")
 	private String sync_item_index_add;
+	
+	@Value("${portal_base_url}")
+	private String portal_base_url;
+	@Value("${gener_static_page}")
+	private String gener_static_page;
 
 	@Autowired
 	private ItemService itemService;
@@ -89,12 +99,17 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/item/save", method = RequestMethod.POST)
 	public SmResult createItem(TbItem item, String desc, String itemParams) throws Exception {
+
 		SmResult result = itemService.createItem(item, desc, itemParams);
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
-		
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemDesc_url + item.getId());
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + item.getId());
 		// 更新操作结束后，执行数据同步操作，更新索引库数据
-		HttpClientUtils.doGet(search_base_url + sync_item_index_add +item.getId());
+		HttpClientUtils.doPostJson(search_base_url + sync_item_index_add, JsonUtils.objectToJson(item));
+		
+		//更新操作结束后，执行生成对应商品的静态页面
+		HttpClientUtils.doGet(portal_base_url + gener_static_page+ item.getId()+".action");
 		return result;
 	}
 
@@ -108,13 +123,17 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/rest/item/delete", method = RequestMethod.POST)
 	public SmResult deleteItem(Long[] ids) throws Exception {
+
 		SmResult result = itemService.deleteItem(ids);
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
-			
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemDesc_url + ids[i]);
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + ids[i]);
+
+			// 索引同步数据的操作只能在controller层操作，应为service层存在事务，需要在完成所有操作后才会提交数据，但是可能会存在索引库同步后，数据提交失败导致数据不一致的情况！
 			// 更新操作结束后，执行数据同步操作，更新索引库数据
-			HttpClientUtils.doGet(search_base_url + sync_item_index_del + ids[i]);
+			HttpClientUtils.doGet(search_base_url + sync_item_index_del +ids[i]);
 		}
 
 		return result;
@@ -122,6 +141,7 @@ public class ItemController {
 
 	/**
 	 * 商品下架
+	 * ----更新rest服务，同步数据
 	 * 
 	 * @param ids
 	 * @return
@@ -130,10 +150,13 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/rest/item/outstock", method = RequestMethod.POST)
 	public SmResult outstockItem(Long[] ids) throws Exception {
+		
 		SmResult result = itemService.outstockItem(ids);
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		for (int i = 0; i < ids.length; i++) {
 			HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + ids[i]);
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemDesc_url + ids[i]);
+			HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + ids[i]);
 			
 			// 更新操作结束后，执行数据同步操作，更新索引库数据
 			HttpClientUtils.doGet(search_base_url + sync_item_index_del + ids[i]);
@@ -152,11 +175,13 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/rest/item/reshelf", method = RequestMethod.POST)
 	public SmResult reshelfItem(Long[] ids) throws Exception {
+		
 		SmResult result = itemService.reshelfItem(ids);
-
 		for (int i = 0; i < ids.length; i++) {
+			// 先查询出对应商品的详细信息
+			TbItem item = itemService.selectItemById(ids[i]);
 			// 更新操作结束后，执行数据同步操作，更新索引库数据
-			HttpClientUtils.doGet(search_base_url + sync_item_index_add + ids[i]);
+			HttpClientUtils.doPostJson(search_base_url + sync_item_index_add, JsonUtils.objectToJson(item));
 		}
 
 		return result;
@@ -191,7 +216,7 @@ public class ItemController {
 	}
 
 	/**
-	 * 更新商品详细信息
+	 * 更新商品详细信息（商品信息，描述，参数）
 	 * 
 	 * @return
 	 * @throws Exception
@@ -199,9 +224,13 @@ public class ItemController {
 	@ResponseBody
 	@RequestMapping(value = "/rest/item/update", method = RequestMethod.POST)
 	public SmResult updateItemDetails(TbItem item, String desc, String itemParams) throws Exception {
+		
 		SmResult result = itemService.updateItem(item, desc, itemParams);
 		// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 		HttpClientUtils.doGet(rest_service_base_url + rest_sync_item_url + item.getId());
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemDesc_url + item.getId());
+		HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + item.getId());
+
 		return result;
 
 	}

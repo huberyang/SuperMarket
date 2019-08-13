@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.sql.ast.expr.SQLCaseExpr.Item;
 import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.pojo.EasyDataGridResult;
 import com.ncs.common.utils.pojo.SmResult;
@@ -38,6 +37,12 @@ public class ItemParamController {
 	private String rest_service_base_url;
 	@Value("${rest_sync_itemParamItem_url}")
 	private String rest_sync_itemParamItem_url;
+	
+	@Value("${portal_base_url}")
+	private String portal_base_url;
+	@Value("${gener_static_page}")
+	private String gener_static_page;
+
 	@Autowired
 	private ItemParamService itemParamService;
 	@Autowired
@@ -114,8 +119,13 @@ public class ItemParamController {
 			for (TbItem item : itemList) {
 				// 更新操作结束后，执行数据同步操作，清除缓存相关数据
 				HttpClientUtils.doGet(rest_service_base_url + rest_sync_itemParamItem_url + item.getId());
+				
+				//更新操作结束后，执行生成对应商品的静态页面
+				HttpClientUtils.doGet(portal_base_url + gener_static_page+ item.getId()+".action");
 			}
 		}
+		
+		
 		return result;
 	}
 

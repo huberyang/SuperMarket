@@ -32,6 +32,7 @@
 		<jedis.version>3.0.1</jedis.version>
 		<solrj.version>7.4.0</solrj.version>
 		<fastdfs-client-java>1.27-SNAPSHOT</fastdfs-client-java>
+		<freemarker.version>2.3.28</freemarker.version>
 	</properties>
 
 	<!-- 只定义依赖的版本，并不实际依赖 -->
@@ -215,6 +216,14 @@
 				<artifactId>solr-solrj</artifactId>
 				<version>${solrj.version}</version>
 			</dependency>
+			
+			<!-- freemarker -->
+<dependency>
+    <groupId>org.freemarker</groupId>
+    <artifactId>freemarker</artifactId>
+    <version>${freemarker.version}</version>
+</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 

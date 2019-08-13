@@ -45,7 +45,7 @@ public class IndexController {
 
 	
 	@RequestMapping("/item/{itemId}")
-	public String showItemPage(Model model, @PathVariable("itemId") String itemId) throws Exception {
+	public String showItemPage(Model model, @PathVariable("itemId") Long itemId) throws Exception {
 		// 根据商品id查询对应的商品信息
 		 ItemDeatils result = contentService.getItemById(itemId);
 		 model.addAttribute("item", result);
@@ -54,7 +54,7 @@ public class IndexController {
 
 	@RequestMapping(value="/item/param/{itemId}",produces=MediaType.TEXT_HTML_VALUE+";charset=utf-8")
 	@ResponseBody
-	public String showItemParam(Model model, @PathVariable("itemId") String itemId) throws Exception {
+	public String showItemParam(Model model, @PathVariable("itemId") Long itemId) throws Exception {
 		 // 根据商品id查询对应的商品信息
 		 TbItemParamItem result = contentService.getItemParamById(itemId);
 		 return result.getParamData();
@@ -62,7 +62,7 @@ public class IndexController {
 	
 	@RequestMapping(value="/item/desc/{itemId}",produces=MediaType.TEXT_HTML_VALUE+";charset=utf-8")
 	@ResponseBody
-	public String showItemDesc(Model model, @PathVariable("itemId") String itemId) throws Exception {
+	public String showItemDesc(Model model, @PathVariable("itemId") Long itemId) throws Exception {
 		 // 根据商品id查询对应的商品信息
 		 TbItemDesc result = contentService.getItemDescById(itemId);
 		 return result.getItemDesc();

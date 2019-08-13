@@ -13,10 +13,10 @@ public interface ContentService {
 	 */
 	public String getBigADList() throws Exception;
 
-	public ItemDeatils getItemById(String itemId) throws Exception;
+	public ItemDeatils getItemById(Long itemId) throws Exception;
 
-	public TbItemParamItem getItemParamById(String itemId) throws Exception;
+	public TbItemParamItem getItemParamById(Long itemId) throws Exception;
 
-	public TbItemDesc getItemDescById(String itemId) throws Exception;
+	public TbItemDesc getItemDescById(Long itemId) throws Exception;
 
 }

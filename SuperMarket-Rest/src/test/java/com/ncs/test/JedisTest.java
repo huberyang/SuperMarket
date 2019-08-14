@@ -1,6 +1,5 @@
 package com.ncs.test;
 
-import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +8,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.github.pagehelper.StringUtil;
 import com.ncs.rest.component.JedisClient;
 
 import redis.clients.jedis.HostAndPort;
@@ -91,7 +89,7 @@ public class JedisTest {
 		ApplicationContext context=new ClassPathXmlApplicationContext("classpath:spring/applicationContext.xml");
         //从容器中获取JedisClient对象
 		JedisClient client = context.getBean(JedisClient.class);
-		String result = client.hget("redis_tbItemParamItem_key", "155620608526913");
+		String result = client.hget("redis_tbItem_key", "155620608526913");
 		System.out.println(result);
 	}
 	

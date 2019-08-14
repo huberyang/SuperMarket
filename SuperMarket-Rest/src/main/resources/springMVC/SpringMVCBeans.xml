@@ -16,6 +16,10 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd ">
 
+		<!--加载配置文件 -->
+	<context:property-placeholder
+		location="classpath:properties/*.properties" />
+
 	<!--扫描处理器Handler -->
 	<!--将controller bean创建在Spring MVC容器中（子容器） -->
 	<!--此处我们使用SpringMVC来发布rest服务，所以我们此处需要扫描SpringMVC相关包 -->

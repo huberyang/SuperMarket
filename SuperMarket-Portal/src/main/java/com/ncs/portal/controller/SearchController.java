@@ -31,12 +31,16 @@ public class SearchController {
 		try {
 			//search 数据
 			SearchResult searchResult = searchService.search(keyword, page, rows);
-			//封装数据到ModelAndView
-			//参数传递 给页面
-			model.addAttribute("query", keyword);
-			model.addAttribute("totalPages", searchResult.getPageCount());
-			model.addAttribute("itemList", searchResult.getItemList());
-			model.addAttribute("page", searchResult.getStart());
+			if(searchResult!=null) {
+				
+				//封装数据到ModelAndView
+				//参数传递 给页面
+				model.addAttribute("query", keyword);
+				model.addAttribute("totalPages", searchResult.getPageCount());
+				model.addAttribute("itemList", searchResult.getItemList());
+				model.addAttribute("page", searchResult.getStart());
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

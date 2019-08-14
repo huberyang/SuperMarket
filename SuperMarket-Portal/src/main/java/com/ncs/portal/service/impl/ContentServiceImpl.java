@@ -14,7 +14,6 @@ import com.ncs.common.utils.JsonUtils;
 import com.ncs.pojo.TbContent;
 import com.ncs.pojo.TbItem;
 import com.ncs.pojo.TbItemDesc;
-import com.ncs.pojo.TbItemParam;
 import com.ncs.pojo.TbItemParamItem;
 import com.ncs.portal.pojo.ItemDeatils;
 import com.ncs.portal.service.ContentService;
@@ -26,8 +25,10 @@ public class ContentServiceImpl implements ContentService {
 	private String rest_server_url;
 	@Value("${rest_server_content_url}")
 	private String rest_server_content_url;
+	
 	@Value("${ad_content_category}")
 	private String ad_content_category;
+	
 	@Value("${rest_server_item_base_url}")
 	private String rest_server_item_base_url;
 	@Value("${rest_server_item_param_url}")

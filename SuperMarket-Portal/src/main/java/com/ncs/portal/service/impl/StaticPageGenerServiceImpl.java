@@ -32,8 +32,8 @@ public class StaticPageGenerServiceImpl implements StaticPageGenerService {
 	@Autowired
 	private FreeMarkerConfigurer freeMarkerConfigurer;
 
-	@Value("${Static_Page_Path}")
-	private String Static_Page_Path;
+	@Value("${static_page_path}")
+	private String static_page_path;
 
 	@Override
 	public SmResult staticPageService(Long itemId) throws Exception {
@@ -57,7 +57,7 @@ public class StaticPageGenerServiceImpl implements StaticPageGenerService {
 		dataList.put("itemDesc", itemDesc);
 		
 		// create a write object to specify output static page filepath
-		Writer writer = new FileWriter(new File(Static_Page_Path + itemId + ".html"));
+		Writer writer = new FileWriter(new File(static_page_path + itemId + ".html"));
 		// call the template object process function and to params is need
 		template.process(dataList, writer);
 

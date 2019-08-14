@@ -2,6 +2,8 @@ package com.ncs.search.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,7 +18,6 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 
-	
 	/**
 	 * 导入所有状态为 “1”的商品数据到索引库
 	 * @return
@@ -39,12 +40,12 @@ public class ItemController {
 	 * 删除指定商品的索引数据
 	 * @return
 	 */
-	@RequestMapping("/delItemIndexData")
+	@RequestMapping("/delItemIndexData/{itemId}")
 	@ResponseBody
-	public SmResult delItemIndex(Long[] ids) {
+	public SmResult delItemIndex(@PathVariable Long itemId) {
 
 		try {
-			SmResult result = itemService.delItemIndex(ids);
+			SmResult result = itemService.delItemIndex(itemId);
 			return result;
 
 		} catch (Exception e) {
@@ -59,7 +60,7 @@ public class ItemController {
 	 */
 	@RequestMapping("/addItemIndexData")
 	@ResponseBody
-	public SmResult addItemIndex(TbItem item) {
+	public SmResult addItemIndex(@RequestBody TbItem item) {
 
 		try {
 			SmResult result = itemService.addItemIndex(item);

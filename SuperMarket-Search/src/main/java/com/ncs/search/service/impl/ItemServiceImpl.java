@@ -55,14 +55,13 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	@Override
-	public SmResult delItemIndex(Long[] ids) throws Exception {
+	public SmResult delItemIndex(Long itemId) throws Exception {
 
 		// 创建solr查询对象
 		SolrQuery query = new SolrQuery();
 		// 设置查询条件,这个条件是查询所有
-		for (Long id : ids) {
-			query.setQuery("id:" + id);
-		}
+		query.setQuery("id:" + itemId);
+		
 		QueryResponse response = httpSolrClient.query(query);
 		SolrDocumentList results = response.getResults();
 		for (SolrDocument document : results) {

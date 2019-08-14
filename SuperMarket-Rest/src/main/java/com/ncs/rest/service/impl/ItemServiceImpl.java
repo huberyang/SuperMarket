@@ -31,6 +31,7 @@ public class ItemServiceImpl implements ItemService {
 	private String redis_tbItemDesc_key;
 	@Value("${redis_tbItemParamItem_key}")
 	private String redis_tbItemParamItem_key;
+	
 	@Value("${item_expire_second}")
 	private Integer item_expire_second;
 

@@ -30,13 +30,14 @@ import com.ncs.rest.service.ItemService;
 @Controller
 @RequestMapping("/item")
 public class ItemController {
-
+	
 	@Value("${redis_tbItem_key}")
 	private String redis_tbItem_key;
 	@Value("${redis_tbItemDesc_key}")
 	private String redis_tbItemDesc_key;
 	@Value("${redis_tbItemParamItem_key}")
 	private String redis_tbItemParamItem_key;
+	
 	@Autowired
 	private JedisClient jedisClient;
 	@Autowired
@@ -124,7 +125,7 @@ public class ItemController {
 	 * @param itemId
 	 * @return
 	 */
-	@RequestMapping(value = "/sync/desc/{itemId}")
+	@RequestMapping(value = "/sync/itemDesc/{itemId}")
 	@ResponseBody
 	public SmResult syncItemDesc(@PathVariable("itemId") Long itemId) {
 		// 查询缓存中是否存在该ID的缓存数据，如果存在则删除

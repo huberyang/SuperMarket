@@ -48,7 +48,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springMVC</servlet-name>
-		<url-pattern>/search/*</url-pattern>
+		<url-pattern>/sso/*</url-pattern>
 	</servlet-mapping>
 
 	<!--解决Post乱码，过滤器配置 -->

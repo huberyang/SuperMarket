@@ -1,18 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>com.ncs</groupId>
-    <artifactId>SuperMarket</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  
-  <artifactId>SuperMarket-SSO</artifactId>
-  <packaging>war</packaging>
-  <description>SuperMarket-Rest</description>
-  
-  <dependencies>
-  <!--添加Spring的依赖 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.ncs</groupId>
+		<artifactId>SuperMarket</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>SuperMarket-SSO</artifactId>
+	<packaging>war</packaging>
+	<description>SuperMarket-Rest</description>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ncs</groupId>
+			<artifactId>SuperMarket-Manager-Mapper</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<!--添加Spring的依赖 -->
 		<!-- Spring IOC容器相关 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -107,8 +122,8 @@
 			<artifactId>jedis</artifactId>
 		</dependency>
 	</dependencies>
-	
-	
+
+
 	<!--添加Tomcat插件 -->
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -154,6 +169,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-  
-  
+
+
 </project>

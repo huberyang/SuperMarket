@@ -23,8 +23,8 @@
 	<!-- 是用于激活那些已经在spring容器里注册过的bean（无论是通过xml的方式还是通过package sanning的方式）上面的注解 -->
 	<context:annotation-config />
 	<!--开启注解bean扫描 -->
-	<context:component-scan base-package="com.ncs.rest.service"></context:component-scan>
-	<context:component-scan base-package="com.ncs.rest.component"></context:component-scan>
+	<context:component-scan base-package="com.ncs.sso.service"></context:component-scan>
+	<context:component-scan base-package="com.ncs.sso.component"></context:component-scan>
 
 	<!--加载数据源 -->
 	<!-- 加载数据源之前先加载数据源properties配置文件,jdbc.properties被放在了properties目录下被统一加载 -->

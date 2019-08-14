@@ -10,4 +10,6 @@ SuperMarket-Rest
 SuperMarket-Portal
 //search服务
 SuperMarket-Search
+//sso服务
+SuperMarket-SSO
 

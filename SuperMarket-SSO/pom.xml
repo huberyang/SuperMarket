@@ -21,6 +21,7 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		
+		<!--添加对于SuperMarket Mapper层的依赖，mapper层里面就已经添加了持久层框架的依赖MYbatis，所以后边不在需要添加 -->
 		<dependency>
 			<groupId>com.ncs</groupId>
 			<artifactId>SuperMarket-Manager-Mapper</artifactId>

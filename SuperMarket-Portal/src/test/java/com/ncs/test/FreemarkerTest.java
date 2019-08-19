@@ -19,7 +19,7 @@ public class FreemarkerTest {
 	@Test
 	public void testFreemarker() throws IOException, TemplateException {
 		
-		//freemarker proj no need to run depanded web container,so that you can build a java file to run it
+		//freemarker proj no need to depend on web container,so that you can build a java file to run it
 		
 		//create congiguration object for the freemarker
 		Configuration config=new Configuration(Configuration.getVersion());

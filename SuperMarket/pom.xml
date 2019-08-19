@@ -195,13 +195,13 @@
 				<artifactId>commons-fileupload</artifactId>
 				<version>${commons-fileupload.version}</version>
 			</dependency>
-			<!--fastDfs文件服务  -->
+			<!--fastDfs文件服务 -->
 			<dependency>
-			    <groupId>org.csource</groupId>
-			    <artifactId>fastdfs-client-java</artifactId>
-			    <version>${fastdfs-client-java}</version>
+				<groupId>org.csource</groupId>
+				<artifactId>fastdfs-client-java</artifactId>
+				<version>${fastdfs-client-java}</version>
 			</dependency>
-			
+
 			<!-- Redis客户端 -->
 			<!-- jedis是访问redis缓存的JAVA客户端 -->
 			<dependency>
@@ -216,14 +216,14 @@
 				<artifactId>solr-solrj</artifactId>
 				<version>${solrj.version}</version>
 			</dependency>
-			
+
 			<!-- freemarker -->
-<dependency>
-    <groupId>org.freemarker</groupId>
-    <artifactId>freemarker</artifactId>
-    <version>${freemarker.version}</version>
-</dependency>
-			
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>${freemarker.version}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 

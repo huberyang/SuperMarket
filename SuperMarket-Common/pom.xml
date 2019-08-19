@@ -64,6 +64,19 @@
 			<groupId>org.csource</groupId>
 			<artifactId>fastdfs-client-java</artifactId>
 		</dependency>
+			<!-- 要用到HttpServletRequest和HttpServletResponse等对象，则需要引入servlet-api.jar -->
+			<!-- 一般在tomcat安装目录\lib 文件夹下面有，当你把web项目部署到tomcat，会自动加载这个jar包来识别Serlvet一些对象 -->
+			<!-- 而由于我们此工程将tomcat作为maven插件，则我们需要手动加入 -->
+			<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 </project>

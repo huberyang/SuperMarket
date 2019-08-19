@@ -88,7 +88,7 @@
 	<!-- AOP指定事务的切入点 -->
 	<aop:config>
 		<aop:pointcut
-			expression="execution(* com.ncs.rest.service.*.*(..))" id="pt" />
+			expression="execution(* com.ncs.sso.service.*.*(..))" id="pt" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt" />
 	</aop:config>
 
@@ -101,7 +101,7 @@
 	</bean>
 	<!--单机jedis实现类 -->
 	<bean id="jedisClientSingle"
-		class="com.ncs.rest.component.impl.JedisClientSingle" />
+		class="com.ncs.sso.component.impl.JedisClientSingle" />
 
 	<!--集群jedisCluster配置 -->
 	<!-- <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
@@ -137,7 +137,7 @@
 
 	<!--集群jedis实现类 -->
 	<!-- <bean id="jedisClientCluster"
-		class="com.ncs.rest.component.impl.JedisClientCluster" /> -->
+		class="com.ncs.sso.component.impl.JedisClientCluster" /> -->
 
 
 </beans>

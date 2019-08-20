@@ -7,15 +7,15 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache,must-revalidate">
     <title>注册-个人用户</title>
-    <link type="text/css" rel="stylesheet" href="/css/regist.personal.css"/>
-    <link type="text/css" rel="stylesheet" href="/css/passport.base.css"/>
-    <script type="text/javascript" src="/js/jquery-1.6.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="/sso/css/regist.personal.css"/>
+    <link type="text/css" rel="stylesheet" href="/sso/css/passport.base.css"/>
+    <script type="text/javascript" src="/sso/js/jquery-1.6.4.js"></script>
 </head>
 <body>
 <div class="w" id="logo">
     <div>
     	<a href="http://localhost:8082">
-    		<img src="/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
+    		<img src="/sso/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
     	</a> <b></b>
     </div>
 </div>
@@ -27,7 +27,7 @@
         </ul>
         <div class="extra">
         <span>我已经注册，现在就&nbsp;
-        	<a href="/user/showLogin" class="flk13">登录</a>
+        	<a href="/sso/page/login" class="flk13">登录</a>
         </span>
         </div>
     </div>
@@ -107,9 +107,7 @@
                            onclick="REGISTER.reg();"/>
                 </div>
             </div>
-            <div class="phone">
-                <img width="180" height="180" src="/images/phone-bg.jpg">
-            </div>
+          
             <span class="clr"></span>
         </form>
     </div>
@@ -148,12 +146,12 @@
 		beforeSubmit:function() {
 				//检查用户是否已经被占用
 				$.ajax({
-	            	url : REGISTER.param.surl + "/user/check/"+escape($("#regName").val())+"/1?r=" + Math.random(),
+	            	url : REGISTER.param.surl + "/sso/user/check/"+escape($("#regName").val())+"/3?r=" + Math.random(),
 	            	success : function(data) {
 	            		if (data.data) {
 	            			//检查手机号是否存在
 	            			$.ajax({
-	            				url : REGISTER.param.surl + "/user/check/"+$("#phone").val()+"/2?r=" + Math.random(),
+	            				url : REGISTER.param.surl + "/sso/user/check/"+$("#phone").val()+"/1?r=" + Math.random(),
 				            	success : function(data) {
 				            		if (data.data) {
 					            		REGISTER.doSubmit();
@@ -172,17 +170,43 @@
 	            	
 		},
 		doSubmit:function() {
-			$.post("/user/register",$("#personRegForm").serialize(), function(data){
-				if(data.status == 200){
-					alert('用户注册成功，请登录！');
-					REGISTER.login();
-				} else {
-					alert("注册失败！");
+			var data={
+				       "username": $("#regName").val(), 
+				       "password": $("#pwd").val(),
+				       "phone":$("#phone").val()
+		     };
+			data=JSON.stringify(data);
+			// use contentType:"application/json;charset=utf-8"  ----@ResponseBody
+			$.ajax({
+				url:REGISTER.param.surl+"/sso/user/registe",
+				type:"post",
+				data:data,
+				dataType:"json",
+				contentType:"application/json;charset=utf-8",
+				success: function(data){
+					if(data.status == 200){
+						alert('用户注册成功，请登录！');
+						REGISTER.login();
+					} else {
+						alert("注册失败！");
+					}
 				}
 			});
+			
+			//default: Content-Type: application/x-www-form-urlencoded    ---@RequestParam
+			//$.post("/sso/user/registe",$("#personRegForm").serialize(), function(data){
+			//			if(data.status == 200){
+			//				alert('用户注册成功，请登录！');
+			//				REGISTER.login();
+			//			} else {
+			//				alert("注册失败！");
+			//			}
+            //		});			
+			
+			
 		},
 		login:function() {
-			 location.href = "/user/showLogin";
+			 location.href = "/sso/page/login";
 			 return false;
 		},
 		reg:function() {

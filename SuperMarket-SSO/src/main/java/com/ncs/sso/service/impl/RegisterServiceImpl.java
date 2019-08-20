@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,25 +53,19 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 		
 		//check the user's info
-		if(StringUtils.isBlank(user.getPhone())){
+		if(StringUtils.isNotBlank(user.getPhone())){
 			SmResult checkPhone = CheckInfo(user.getPhone(), 1);
-			if((Boolean)checkPhone.getData()) {
-				SmResult.build(400, "user's phone can't be empty");
+			if(!(Boolean)checkPhone.getData()) {
+				SmResult.build(400, "user's phone repeat");
 			}
 		}
 		
-		if(StringUtils.isBlank(user.getEmail())){
+		if(StringUtils.isNotBlank(user.getEmail())){
 		SmResult checkEmail = CheckInfo(user.getEmail(), 2);
-		if((Boolean)checkEmail.getData()) {
-			SmResult.build(400, "user's email can't be empty");
+		if(!(Boolean)checkEmail.getData()) {
+			SmResult.build(400, "user's email repeat");
 		}
 		}
-		
-		SmResult checkUsername = CheckInfo(user.getUsername(), 3);
-		if((Boolean)checkUsername.getData()) {
-			SmResult.build(400, "user's name can't be empty");
-		}
-		
 		
 		user.setCreated(new Date());
 		user.setUpdated(new Date());

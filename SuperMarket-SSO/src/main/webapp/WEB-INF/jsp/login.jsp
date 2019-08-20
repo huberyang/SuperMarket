@@ -5,14 +5,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
     <title>登录超级市场</title>
-    <link type="text/css" rel="stylesheet" href="/css/login.css"/>
-    <script type="text/javascript" src="/js/jquery-1.6.4.js"></script>
+    <link type="text/css" rel="stylesheet" href="/sso/css/login.css"/>
+    <script type="text/javascript" src="/sso/js/jquery-1.6.4.js"></script>
 </head>
 <body>
 <div class="w">
     <div id="logo">
     	<a href="http://localhost:8082" clstag="passport|keycount|login|01">
-    		<img src="/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
+    		<img src="/sso/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
     	</a><b></b>
    	</div>
 </div>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="free-regist">
-            <span><a href="/user/showRegister" clstag="passport|keycount|login|08">免费注册&gt;&gt;</a></span>
+            <span><a href="/sso/page/register" clstag="passport|keycount|login|08">免费注册&gt;&gt;</a></span>
         </div>
     </div>
 </form>
@@ -75,7 +75,7 @@
 				return true;
 			},
 			doLogin:function() {
-				$.post("/user/login", $("#formlogin").serialize(),function(data){
+				$.post("/sso/user/login", $("#formlogin").serialize(),function(data){
 					if (data.status == 200) {
 						alert("登录成功！");
 						if (redirectUrl == "") {

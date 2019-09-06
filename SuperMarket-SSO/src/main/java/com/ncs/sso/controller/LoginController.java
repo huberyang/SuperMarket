@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
@@ -27,11 +26,17 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public SmResult login(@RequestParam String username, @RequestParam String password, HttpServletRequest request,
-			HttpServletResponse response) {
+	public Object login(@RequestParam String username, @RequestParam String password, HttpServletRequest request,
+			HttpServletResponse response, String callback) {
 		try {
-
 			SmResult result = loginService.login(username, password, request, response);
+			// to support jsonp
+			if (StringUtils.isNotBlank(callback)) {
+				MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(result);
+				mappingJacksonValue.setJsonpFunction(callback);
+				return mappingJacksonValue;
+			}
+
 			return result;
 
 		} catch (Exception e) {

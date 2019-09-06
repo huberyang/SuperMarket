@@ -16,11 +16,14 @@ import com.ncs.portal.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private static final Class<?> Tb = null;
 	@Value("${SSO_BASE_URL}")
 	private String SSO_BASE_URL;
 	@Value("${SSO_USER_TOKEN_SERVICE}")
 	private String SSO_USER_TOKEN_SERVICE;
+
+	// 设置cookie的过期时间
+	@Value("${Cookie_Expire}")
+	private Integer Cookie_Expire;
 
 	@Override
 	public TbUser getUserByToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -45,6 +48,12 @@ public class UserServiceImpl implements UserService {
 		// get the user object
 		result = SmResult.formatToPojo(jsonResult, TbUser.class);
 		TbUser user = (TbUser) result.getData();
+
+		if (user != null) {
+			// update the cookie token expire time
+			CookieUtils.setCookie(request, response, "SM_TOKEN", token, Cookie_Expire, true);
+		}
+
 		return user;
 
 	}

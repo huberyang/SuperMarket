@@ -51,6 +51,12 @@ public class IndexController {
 		return "item";
 	}
 
+	@RequestMapping("/order/order-cart")
+	public String showOrderPage() throws Exception {
+		// 根据商品id查询对应的商品信息
+		return "order-cart";
+	}
+
 	@RequestMapping(value="/item/param/{itemId}",produces=MediaType.TEXT_HTML_VALUE+";charset=utf-8")
 	@ResponseBody
 	public String showItemParam(Model model, @PathVariable("itemId") Long itemId) throws Exception {

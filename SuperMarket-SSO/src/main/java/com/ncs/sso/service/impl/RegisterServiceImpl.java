@@ -22,7 +22,7 @@ public class RegisterServiceImpl implements RegisterService {
 
 	// @param type 1: phone 2:email 3:username
 	@Override
-	public SmResult CheckInfo(String param, int type) {
+	public SmResult CheckInfo(String param, int type) throws Exception {
 
 		TbUserExample example = new TbUserExample();
 		Criteria criteria = example.createCriteria();
@@ -46,7 +46,7 @@ public class RegisterServiceImpl implements RegisterService {
 	}
 
 	@Override
-	public SmResult Registe(TbUser user) {
+	public SmResult Registe(TbUser user) throws Exception {
 		
 		if(StringUtils.isBlank(user.getUsername())||StringUtils.isBlank(user.getPassword())) {
 			SmResult.build(400, "username or the password can't be empty");

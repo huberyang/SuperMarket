@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import com.ncs.common.utils.CookieUtils;
+import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.mapper.TbUserMapper;
@@ -29,6 +30,10 @@ public class LoginServiceImpl implements LoginService {
 	private String user_token_key;
 	@Value("${user_token_expire}")
 	private Integer user_token_expire;
+	@Value("${cart_base_url}")
+	private String cart_base_url;
+	@Value("${cart_transfer_data_to_redis}")
+	private String cart_transfer_data_to_redis;
 
 	@Autowired
 	private TbUserMapper tbUserMapper;
@@ -37,7 +42,8 @@ public class LoginServiceImpl implements LoginService {
 	private JedisClient jedisClient;
 
 	@Override
-	public SmResult login(String username, String password, HttpServletRequest request, HttpServletResponse response) {
+	public SmResult login(String username, String password, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 
 		// check username and password first
 		TbUserExample example = new TbUserExample();
@@ -70,11 +76,14 @@ public class LoginServiceImpl implements LoginService {
 		// status
 		CookieUtils.setCookie(request, response, "SM_TOKEN", token);
 
+		// when login success, transfer cartItem from cookie to redis
+		HttpClientUtils.doGet(cart_base_url + cart_transfer_data_to_redis + user.getId() + ".action");
+
 		return SmResult.ok(token);
 	}
 
 	@Override
-	public SmResult getUserByToken(String token) {
+	public SmResult getUserByToken(String token) throws Exception {
 
 		String userJson = jedisClient.get(user_token_key + ":" + token);
 
@@ -92,7 +101,7 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public SmResult safeLoginOut(String token) {
+	public SmResult safeLoginOut(String token) throws Exception {
 		
 		//delete the user session cache
 		jedisClient.expire(user_token_key + ":" + token, 0);

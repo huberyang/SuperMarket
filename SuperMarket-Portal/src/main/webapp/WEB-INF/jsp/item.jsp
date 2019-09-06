@@ -32,6 +32,13 @@
 				HM:'0'
 			}
 		};
+    	
+    	function addCart(){
+    		//get the item num from the front End
+    		var itemNum=$('#buy-num').val();
+    		//send the url  request
+    		window.location.href="/cart/addCart/${item.id}.html?num="+itemNum;
+    	}
 	</script>
 </head>
 <body version="140120">
@@ -135,7 +142,7 @@
 		        <li id="choose-result"><div class="dt"></div><div class="dd"></div></li>
 				<li id="choose-btns">
 					<div id="choose-btn-append"  class="btn">
-							<a class="btn-append " id="InitCartUrl" href="/cart/add/${item.id}.html" clstag="shangpin|keycount|product|initcarturl">加入购物车<b></b></a>
+							<a class="btn-append " id="InitCartUrl" href="javascript:addCart();" clstag="shangpin|keycount|product|initcarturl">加入购物车<b></b></a>
 					</div>
 					<div id="choose-btn-easybuy" class="btn"></div>
 					<div id="choose-btn-divide" class="btn"></div>

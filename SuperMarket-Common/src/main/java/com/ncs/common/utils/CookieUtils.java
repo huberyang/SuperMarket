@@ -155,6 +155,7 @@ public final class CookieUtils {
                 }
             }
             cookie.setPath("/");
+			// 我们在保存cookie时，必须为其指定域名和root path,这样下次系统才能访问得到cookie
             response.addCookie(cookie);
         } catch (Exception e) {
         	 e.printStackTrace();
@@ -202,7 +203,7 @@ public final class CookieUtils {
             domainName = "";
         } else {
             serverName = serverName.toLowerCase();
-            serverName = serverName.substring(7);
+			serverName = serverName.substring(7); // http:// if was https://, need to change the position to the 8
             final int end = serverName.indexOf("/");
             serverName = serverName.substring(0, end);
             final String[] domains = serverName.split("\\.");

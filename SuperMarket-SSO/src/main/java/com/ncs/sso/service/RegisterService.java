@@ -14,8 +14,8 @@ public interface RegisterService {
 	 * @param type    1: phone   2:email   3:username
 	 * @return
 	 */
-	public SmResult CheckInfo(String param,int type);
+	public SmResult CheckInfo(String param, int type) throws Exception;
 	
-	  public SmResult Registe(TbUser user);
+	public SmResult Registe(TbUser user) throws Exception;
 
 }

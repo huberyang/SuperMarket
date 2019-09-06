@@ -7,11 +7,12 @@ import com.ncs.common.utils.pojo.SmResult;
 
 public interface LoginService {
 	
-	public SmResult login(String username,String password,HttpServletRequest request,HttpServletResponse response);
+	public SmResult login(String username, String password, HttpServletRequest request, HttpServletResponse response)
+			throws Exception;
 	
-	public SmResult getUserByToken(String token);
+	public SmResult getUserByToken(String token) throws Exception;
 	
-	public SmResult safeLoginOut(String token);
+	public SmResult safeLoginOut(String token) throws Exception;
 
 
 }

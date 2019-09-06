@@ -9,20 +9,21 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ncs.pojo.TbUser;
+import com.ncs.portal.service.CartService;
 import com.ncs.portal.service.UserService;
 
 public class LoginIntercepter implements HandlerInterceptor {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CartService cartService;
 
 	@Value("${SSO_BASE_URL}")
 	private String SSO_BASE_URL;
 	@Value("${SSO_USER_LOGIN_SERVICE}")
 	private String SSO_USER_LOGIN_SERVICE;
 	
-	
-
 	@Override
 	// 在Handler（controller）方法执行之前执行
 	// 使用场景: 权限认证，身份认证
@@ -39,6 +40,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 			response.sendRedirect(SSO_BASE_URL + SSO_USER_LOGIN_SERVICE + "?redirectUrl=" + request.getRequestURL());
 			return false;
 		}
+		
 		// user info is not null, so that user no need login anymore
 		return true;
 	}

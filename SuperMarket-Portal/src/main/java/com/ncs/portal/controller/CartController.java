@@ -35,19 +35,20 @@ public class CartController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "success";
+		return "cartSuccess";
 	}
 
 	@RequestMapping("/show")
 	public String cartShow(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
-			List<CartItem> cartItemList = cartService.showCartDetails(request, response);
+			List<CartItem> cartItemList = cartService.getCartDetails(request, response);
 			model.addAttribute("cartList", cartItemList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "cart";
 	}
+
 
 	@RequestMapping("/update/num/{itemId}/{num}")
 	@ResponseBody

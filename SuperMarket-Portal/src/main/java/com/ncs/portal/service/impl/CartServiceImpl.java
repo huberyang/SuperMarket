@@ -161,7 +161,7 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartItem> showCartDetails(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public List<CartItem> getCartDetails(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		List<CartItem> cateItemList = null;
 		// 判断用户是否已经登陆

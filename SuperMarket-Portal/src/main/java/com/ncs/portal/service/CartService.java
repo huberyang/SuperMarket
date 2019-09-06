@@ -40,7 +40,7 @@ public interface CartService {
 	 * @param request
 	 * @return
 	 */
-	public List<CartItem> showCartDetails(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public List<CartItem> getCartDetails(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	/**
 	 * 修改购物车中商品的数量

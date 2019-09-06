@@ -41,6 +41,9 @@ public class LoginIntercepter implements HandlerInterceptor {
 			return false;
 		}
 		
+		// put the user into this request scope
+		request.setAttribute("user", user);
+
 		// user info is not null, so that user no need login anymore
 		return true;
 	}

@@ -1,5 +1,10 @@
 package com.ncs.portal.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -10,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ncs.pojo.TbItemDesc;
 import com.ncs.pojo.TbItemParamItem;
+import com.ncs.portal.pojo.CartItem;
 import com.ncs.portal.pojo.ItemDeatils;
+import com.ncs.portal.service.CartService;
 import com.ncs.portal.service.ContentService;
 
 @Controller
@@ -18,6 +25,9 @@ public class IndexController {
 
 	@Autowired
 	private ContentService contentService;
+	@Autowired
+	private CartService cartService;
+
 
 	/*
 	 * 
@@ -52,8 +62,15 @@ public class IndexController {
 	}
 
 	@RequestMapping("/order/order-cart")
-	public String showOrderPage() throws Exception {
+	public String showOrderPage(Model model, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		// 根据商品id查询对应的商品信息
+		try {
+			List<CartItem> cartItemList = cartService.getCartDetails(request, response);
+			model.addAttribute("cartList", cartItemList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "order-cart";
 	}
 

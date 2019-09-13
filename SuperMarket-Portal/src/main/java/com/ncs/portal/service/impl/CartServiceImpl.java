@@ -267,12 +267,19 @@ public class CartServiceImpl implements CartService {
 
 		if (!cartItemListFromCookie.isEmpty()) {
 			for (CartItem cartItem : cartItemListFromCookie) {
-				if (cartItemListFromRedis == null) {
-					cartItemListFromRedis = new ArrayList<>();
-				}
-				cartItemListFromRedis.add(cartItem);
-			}
+				if (!cartItemListFromRedis.isEmpty()) {
+					for (CartItem cartItemRedis : cartItemListFromRedis) {
+						if (cartItemRedis.getItemId().equals(cartItem.getItemId())) {
+							cartItemRedis.setNum(cartItemRedis.getNum() + 1);
+						} else {
+							cartItemListFromRedis.add(cartItem);
+						}
+					}
 
+				} else {
+					cartItemListFromRedis.add(cartItem);
+				}
+			}
 			// save to redis
 			HttpClientUtils.doPostJson(rest_server_url + REST_SERVER_CART_ADD + userId,
 					JsonUtils.objectToJson(cartItemListFromRedis));

@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 	@Override
-	public String createOrder(OrderInfo orderInfo) {
+	public Integer createOrder(OrderInfo orderInfo) {
 
 		String data = JsonUtils.objectToJson(orderInfo);
 
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
 		String postResult = HttpClientUtils.doPostJson(ORDER_SERVICE_BASE_URL + ORDER_SERVICE_CREATE_ORDER, data);
 
 		SmResult result = SmResult.format(postResult);
-		String orderId = (String) result.getData();
+		Integer orderId = (Integer) result.getData();
 		return orderId;
 	}
 

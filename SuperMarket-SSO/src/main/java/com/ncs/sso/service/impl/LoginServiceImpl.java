@@ -79,7 +79,7 @@ public class LoginServiceImpl implements LoginService {
 		// when login success, transfer cartItem from cookie to redis
 		HttpClientUtils.doGet(cart_base_url + cart_transfer_data_to_redis + user.getId() + ".action");
 
-		return SmResult.ok(token);
+		return SmResult.ok(user.getId());
 	}
 
 	@Override

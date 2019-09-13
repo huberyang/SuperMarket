@@ -61,6 +61,14 @@
 <script type="text/javascript">
 	var redirectUrl = "${redirect}";
 	var LOGIN = {
+			transferCookieToRedis:function(data){
+				$.ajax({
+					type: "get", 
+		            url: "http://localhost:8082/cart/transfer/"+data+".action", 
+		            dataType: "jsonp",
+		            jsonp:"callback"
+				});
+			},
 			checkInput:function() {
 				if ($("#loginname").val() == "") {
 					alert("用户名不能为空");
@@ -79,8 +87,11 @@
 					if (data.status == 200) {
 						alert("登录成功！");
 						if (redirectUrl == "") {
+							//when login success，transfer cookie details to redis --（CartItem）
+						    //this.transferCookieToRedis(data.data);
 							location.href = "http://localhost:8082";
 						} else {
+							//this.transferCookieToRedis(data.data);
 							location.href = redirectUrl;
 						}
 					} else {
@@ -94,7 +105,6 @@
 					this.doLogin();
 				}
 			}
-		
 	};
 	$(function(){
 		$("#loginsubmit").click(function(){

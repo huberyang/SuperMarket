@@ -3,6 +3,8 @@ package com.ncs.order.service.impl;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import com.ncs.vo.OrderInfo;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+	private final Log logger = LogFactory.getLog(OrderServiceImpl.class);
 
 	@Value("${REDIS_ORDER_GENE_KEY}")
 	private String REDIS_ORDER_GENE_KEY;
@@ -38,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public SmResult createOrder(OrderInfo orderInfo) throws Exception {
+		logger.info("createOrder begin");
 
 		// because redis was single thread（no repeat）, so when can use incr command to
 		// generate the orderId,

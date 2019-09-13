@@ -4,6 +4,6 @@ import com.ncs.vo.OrderInfo;
 
 public interface OrderService {
 
-	public String createOrder(OrderInfo orderInfo);
+	public Integer createOrder(OrderInfo orderInfo) throws Exception;
 
 }

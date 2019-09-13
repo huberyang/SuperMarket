@@ -13,14 +13,15 @@ import com.ncs.pojo.TbUser;
 import com.ncs.portal.service.OrderService;
 import com.ncs.vo.OrderInfo;
 
-@Controller("/order")
+@Controller
+@RequestMapping("/order")
 public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createOrder(OrderInfo orderInfo, Model model, HttpServletRequest request) {
+	public String createOrder(OrderInfo orderInfo, Model model, HttpServletRequest request) throws Exception {
 
 		TbUser user = (TbUser) request.getAttribute("user");
 
@@ -28,7 +29,7 @@ public class OrderController {
 		orderInfo.setUserId(user.getId());
 		orderInfo.setBuyerNick(user.getUsername());
 
-		String orderId = orderService.createOrder(orderInfo);
+		Integer orderId = orderService.createOrder(orderInfo);
 		
 		// pass the orderId to the front end
 		model.addAttribute("orderId", orderId);

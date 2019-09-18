@@ -265,18 +265,22 @@ public class CartServiceImpl implements CartService {
 		List<CartItem> cartItemListFromCookie = getCateItemListFromCookie(request);
 		List<CartItem> cartItemListFromRedis = getCateItemListFromRedis(userId);
 
-		if (!cartItemListFromCookie.isEmpty()) {
+		if (!cartItemListFromCookie.isEmpty()) {// 如果cookie存在购物车列表
 			for (CartItem cartItem : cartItemListFromCookie) {
-				if (!cartItemListFromRedis.isEmpty()) {
+				if (!cartItemListFromRedis.isEmpty()) {// 如果redis中存在购物车列表
 					for (CartItem cartItemRedis : cartItemListFromRedis) {
+						// 合并cookie中的购物车列表到redis中
 						if (cartItemRedis.getItemId().equals(cartItem.getItemId())) {
+							// 存在相同商品，修改redis中商品数量
 							cartItemRedis.setNum(cartItemRedis.getNum() + 1);
 						} else {
+							// redis中不存在该商品，则直接增加商品
 							cartItemListFromRedis.add(cartItem);
 						}
 					}
 
 				} else {
+					// redis中不存在商品，我们直接将cookie中的购物车列表转入redis中
 					cartItemListFromRedis.add(cartItem);
 				}
 			}

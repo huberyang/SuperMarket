@@ -7,12 +7,9 @@
 		<artifactId>SuperMarket</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.ncs</groupId>
+	
 	<artifactId>SuperMarket-Manager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
-
 
 	<modules>
 		<module>SuperMarket-Manager-Pojo</module>
@@ -32,7 +29,11 @@
 					<port>8080</port>
 					<!-- 根目录 -->
 					<path>/</path>
-				</configuration>
+					<!--tomcat7 热部署配置,注意：tomcat6熱部署url為：http://192.168.28.132:8080/manager  -->
+					<url>http://192.168.28.132:8080/manager/text</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+				    </configuration>
 			</plugin>
 		</plugins>
 	</build>

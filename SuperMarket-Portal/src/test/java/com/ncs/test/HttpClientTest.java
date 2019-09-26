@@ -26,7 +26,7 @@ public class HttpClientTest {
 		// 第一步：创建一个HttpClient对象
 		CloseableHttpClient httpClient=HttpClients.createDefault();
 		// 第二步：创建一个HttpGet对象，需要制定一个请求的url
-		HttpGet get =new HttpGet("http://localhost:8083/rest/content/89");
+		HttpGet get = new HttpGet("http://192.168.28.128:8083/rest/content/89");
 		// 第三步：执行请求
 		CloseableHttpResponse response = httpClient.execute(get);
 		// 四步：接收返回结果。HttpEntity对象
@@ -48,7 +48,7 @@ public class HttpClientTest {
 		// 第一步：创建一个httpClient对象
 		CloseableHttpClient httpClient=HttpClients.createDefault();
 		// 第二步：创建一个HttpPost对象。需要指定一个url
-		HttpPost post=new HttpPost("http://localhost:8080/");
+		HttpPost post = new HttpPost("http://192.168.28.132:8080/");
 		// 第三步：创建一个list模拟表单，list中每个元素是一个NameValuePair对象
 		List<NameValuePair> list=new ArrayList<>();
 		list.add(new BasicNameValuePair("key1","value1"));

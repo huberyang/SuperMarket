@@ -11,7 +11,7 @@
 <body>
 <div class="w">
     <div id="logo">
-    	<a href="http://localhost:8082" clstag="passport|keycount|login|01">
+    	<a href="http://www.supermarket.com" clstag="passport|keycount|login|01">
     		<img src="/sso/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
     	</a><b></b>
    	</div>
@@ -61,14 +61,6 @@
 <script type="text/javascript">
 	var redirectUrl = "${redirect}";
 	var LOGIN = {
-			transferCookieToRedis:function(data){
-				$.ajax({
-					type: "get", 
-		            url: "http://localhost:8082/cart/transfer/"+data+".action", 
-		            dataType: "jsonp",
-		            jsonp:"callback"
-				});
-			},
 			checkInput:function() {
 				if ($("#loginname").val() == "") {
 					alert("用户名不能为空");
@@ -87,11 +79,8 @@
 					if (data.status == 200) {
 						alert("登录成功！");
 						if (redirectUrl == "") {
-							//when login success，transfer cookie details to redis --（CartItem）
-						    //this.transferCookieToRedis(data.data);
-							location.href = "http://localhost:8082";
+							location.href = "http://www.supermarket.com";
 						} else {
-							//this.transferCookieToRedis(data.data);
 							location.href = redirectUrl;
 						}
 					} else {

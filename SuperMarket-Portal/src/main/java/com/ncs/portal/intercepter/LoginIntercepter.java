@@ -19,8 +19,8 @@ public class LoginIntercepter implements HandlerInterceptor {
 	@Autowired
 	private CartService cartService;
 
-	@Value("${SSO_BASE_URL}")
-	private String SSO_BASE_URL;
+	@Value("${SSO_BASE_SIT_URL}")
+	private String SSO_BASE_SIT_URL;
 	@Value("${SSO_USER_LOGIN_SERVICE}")
 	private String SSO_USER_LOGIN_SERVICE;
 	
@@ -37,7 +37,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 		// session expire, redis expire , or some error occur
 		if (user == null) {
 			// user info can't found, so user need login first, redirect to login page
-			response.sendRedirect(SSO_BASE_URL + SSO_USER_LOGIN_SERVICE + "?redirectUrl=" + request.getRequestURL());
+			response.sendRedirect(SSO_BASE_SIT_URL + SSO_USER_LOGIN_SERVICE + "?redirectUrl=" + request.getRequestURL());
 			return false;
 		}
 		

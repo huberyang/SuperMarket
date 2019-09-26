@@ -5,13 +5,13 @@ var TT= MARKET = {
 			return ;
 		}
 		$.ajax({
-			url : "http://localhost:8085/sso/user/token/" + _ticket,
+			url : "http://sso.supermarket.com/sso/user/token/" + _ticket,
 			dataType : "jsonp",
 			type : "GET",
 			success : function(data){
 				if(data.status == 200){
 					var username = data.data.username;
-					var html = username + "，欢迎来到超级市场！<a href=\"http://localhost:8085/sso/user/logout/"+_ticket+"\" class=\"link-logout\">[退出]</a>";
+					var html = username + "，欢迎来到超级市场！<a href=\"http://sso.supermarket.com/sso/user/logout/"+_ticket+"\" class=\"link-logout\">[退出]</a>";
 					$("#loginbar").html(html);
 				}
 			}

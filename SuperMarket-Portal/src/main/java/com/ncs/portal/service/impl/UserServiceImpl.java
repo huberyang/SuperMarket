@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
 		SmResult result = SmResult.format(jsonResult);
 
-		if (result.getStatus() != 200) {
+		if (result == null && result.getStatus() != 200) {
 			// maybe so error occur,so can't get user info,return null
 			return null;
 		}

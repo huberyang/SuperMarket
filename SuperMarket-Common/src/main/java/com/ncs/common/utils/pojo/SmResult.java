@@ -5,6 +5,18 @@ import java.util.List;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * 
+ * @Title: SmResult.java
+ * @Package com.ncs.common.utils.pojo
+ * @Description: TODO(用一句话描述该文件做什么)
+ * @author: Hubery Yang
+ * @date: Sep 18, 2019 11:50:51 PM
+ * @version V1.0
+ * @Copyright: 2019 Inc. All rights reserved.
+ *
+ */
+
 public class SmResult {
 
 	// 定义jackson对象

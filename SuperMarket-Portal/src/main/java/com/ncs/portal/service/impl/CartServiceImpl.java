@@ -80,21 +80,24 @@ public class CartServiceImpl implements CartService {
 	private List<CartItem> getCateItemListFromRedis(Long userId) {
 
 		String jsonData = HttpClientUtils.doGet(rest_server_url + REST_SERVER_CART_RETRIEVE + userId);
+		SmResult result = SmResult.formatToList(jsonData, CartItem.class);
 		// 将取出的商品列表数据（json）转换为java对象
-		return jsonData == "" ? new ArrayList<CartItem>()
-				: (List<CartItem>) SmResult.formatToList(jsonData, CartItem.class).getData();
+		return result.getData() == null ? new ArrayList<CartItem>()
+				: (List<CartItem>) result.getData();
 	}
 
 	@Override
 	public SmResult AddToCart(Long itemId, Integer num, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
+		List<CartItem> cartItemList = new ArrayList<>();
+
 		// 先查询当前cookie下是否用户已经登陆
 		TbUser user = userService.getUserByToken(request, response);
 
 		if (user == null) {
 			// 1.先根据商品的id，查询cookie，判断是否存在该商品,如果存在则直接增加商品在cookie中的数量 SM_TOKEN
-			List<CartItem> cartItemList = getCateItemListFromCookie(request);
+			cartItemList = getCateItemListFromCookie(request);
 
 			boolean existFlag = false;
 			// 对于我们存在cookie中的商品，我们可以直接保存一个商品集合到cookie中
@@ -127,14 +130,15 @@ public class CartServiceImpl implements CartService {
 			// 已经登陆,发送http请求将商品保存到redis购物车列表中
 
 			// 1.我们需要先请求，获取到redis缓存中的数据，将我们新添加的数据加入
-			List<CartItem> cartItemList = getCateItemListFromRedis(user.getId());
+			cartItemList = getCateItemListFromRedis(user.getId());
 			boolean existFlag = false;
-
-			for (CartItem item : cartItemList) {
-				if (item != null && item.getItemId().equals(itemId)) {
-					existFlag = true;
-					// 商品添加num
-					item.setNum(item.getNum() + num);
+			if (cartItemList == null) {
+				for (CartItem item : cartItemList) {
+					if (item != null && item.getItemId().equals(itemId)) {
+						existFlag = true;
+						// 商品添加num
+						item.setNum(item.getNum() + num);
+					}
 				}
 			}
 			// 如果redis緩存中不存在
@@ -262,12 +266,15 @@ public class CartServiceImpl implements CartService {
 	public SmResult transferCookieDataToRedis(Long userId, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		List<CartItem> cartItemListFromCookie = getCateItemListFromCookie(request);
-		List<CartItem> cartItemListFromRedis = getCateItemListFromRedis(userId);
+		List<CartItem> cartItemListFromCookie = new ArrayList<>();
+		List<CartItem> cartItemListFromRedis = new ArrayList<>();
 
-		if (!cartItemListFromCookie.isEmpty()) {// 如果cookie存在购物车列表
+		cartItemListFromCookie = getCateItemListFromCookie(request);
+		cartItemListFromRedis = getCateItemListFromRedis(userId);
+
+		if (cartItemListFromCookie != null && !cartItemListFromCookie.isEmpty()) {// 如果cookie存在购物车列表
 			for (CartItem cartItem : cartItemListFromCookie) {
-				if (!cartItemListFromRedis.isEmpty()) {// 如果redis中存在购物车列表
+				if (cartItemListFromRedis != null && !cartItemListFromRedis.isEmpty()) {// 如果redis中存在购物车列表
 					for (CartItem cartItemRedis : cartItemListFromRedis) {
 						// 合并cookie中的购物车列表到redis中
 						if (cartItemRedis.getItemId().equals(cartItem.getItemId())) {

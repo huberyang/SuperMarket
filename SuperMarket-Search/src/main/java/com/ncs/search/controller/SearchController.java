@@ -24,7 +24,8 @@ public class SearchController {
 
 		try {
 			// 更改请求参数的编码
-			keyword = new String(keyword.getBytes("iso8859-1"), "utf-8");
+			keyword = java.net.URLDecoder.decode(keyword, "UTF-8");
+			// keyword = new String(keyword.getBytes("ISO8859-1"), "UTF-8");
 			SearchResult result = searchService.queryData(keyword, page, rows);
 			return SmResult.ok(result);
 		} catch (Exception e) {

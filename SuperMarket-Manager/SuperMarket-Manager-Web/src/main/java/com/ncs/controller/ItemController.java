@@ -56,7 +56,7 @@ public class ItemController {
 
 	/**
 	 * find item by it itemId resultful api format GET
-	 * "http://localhost:8080/item/{itemId}
+	 * "http://192.168.28.132:8080/item/{itemId}
 	 * 
 	 * @param itemId
 	 * @return json item
@@ -72,7 +72,7 @@ public class ItemController {
 
 	/**
 	 * find the item list use pageHeleper to pagination GET
-	 * "http://localhost:8080/item/list?page=1&rows=30".
+	 * "http://192.168.28.132:8080/item/list?page=1&rows=30".
 	 * 
 	 * @return json items
 	 * @throws Exception

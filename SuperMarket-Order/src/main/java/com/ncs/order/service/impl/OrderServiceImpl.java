@@ -1,6 +1,8 @@
 package com.ncs.order.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -9,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.ncs.common.utils.HttpClientUtils;
+import com.ncs.common.utils.JsonUtils;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.mapper.TbOrderItemMapper;
 import com.ncs.mapper.TbOrderMapper;
 import com.ncs.mapper.TbOrderShippingMapper;
 import com.ncs.order.component.JedisClient;
+import com.ncs.order.pojo.CartItem;
 import com.ncs.order.service.OrderService;
 import com.ncs.pojo.TbOrderItem;
 import com.ncs.pojo.TbOrderShipping;
@@ -30,6 +35,16 @@ public class OrderServiceImpl implements OrderService {
 	private String ORDER_ID_BEGIN;
 	@Value("${REDIS_ORDER_DETAIL_GEN_KEY}")
 	private String REDIS_ORDER_DETAIL_GEN_KEY;
+
+	@Value("${rest_server_url}")
+	private String rest_server_url;
+
+	@Value("${REST_SERVER_CART_ADD}")
+	private String REST_SERVER_CART_ADD;
+
+	@Value("${REST_SERVER_CART_RETRIEVE}")
+	private String REST_SERVER_CART_RETRIEVE;
+
 	@Autowired
 	private TbOrderMapper tbOrderMapper;
 	@Autowired
@@ -40,9 +55,25 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private JedisClient jedisClient;
 
+	/**
+	 * 根据用户id从redis中取出商品列表
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	private List<CartItem> getCateItemListFromRedis(Long userId) {
+
+		String jsonData = HttpClientUtils.doGet(rest_server_url + REST_SERVER_CART_RETRIEVE + userId);
+		SmResult result = SmResult.formatToList(jsonData, CartItem.class);
+		// 将取出的商品列表数据（json）转换为java对象
+		return result.getData() == null ? new ArrayList<CartItem>() : (List<CartItem>) result.getData();
+	}
+
 	@Override
 	public SmResult createOrder(OrderInfo orderInfo) throws Exception {
 		logger.info("createOrder begin");
+
+		List<CartItem> cartItemList = new ArrayList<>();
 
 		// because redis was single thread（no repeat）, so when can use incr command to
 		// generate the orderId,
@@ -80,6 +111,23 @@ public class OrderServiceImpl implements OrderService {
 		orderShipping.setCreated(currDate);
 		orderShipping.setUpdated(currDate);
 		tbOrderShippingMapper.insert(orderShipping);
+
+		// when complete the order need to remove the item in redis cartItemList
+		cartItemList = getCateItemListFromRedis(orderInfo.getUserId());
+		List<CartItem> cartItemUpdateList = cartItemList;
+		List<TbOrderItem> orderItems = orderInfo.getOrderItems();
+
+		for (int i = 0; i < cartItemList.size(); i++) {
+			for (TbOrderItem orderItem : orderItems) {
+				if (cartItemList.get(i) != null
+						&& cartItemList.get(i).getItemId().equals(Long.parseLong(orderItem.getItemId()))) {
+					cartItemUpdateList.remove(cartItemList.get(i));
+				}
+			}
+		}
+		// 然后将我们更新后的购物车数据列表从新放入redis
+		HttpClientUtils.doPostJson(rest_server_url + REST_SERVER_CART_ADD + orderInfo.getUserId(),
+				JsonUtils.objectToJson(cartItemUpdateList));
 
 		// return the orderId
 		return SmResult.ok(orderId);

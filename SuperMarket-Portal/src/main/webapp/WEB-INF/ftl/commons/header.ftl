@@ -20,7 +20,7 @@
 		<!--search end-->
 		<div id="my360buy-2013">
 			<dl>
-				<dt class="ld"><s></s><a href="http://localhost:8084/user/showLogin" clstag="homepage|keycount|home2012|04a">我的</a><b></b></dt>
+				<dt class="ld"><s></s><a href="http://192.168.28.128:8084/user/showLogin" clstag="homepage|keycount|home2012|04a">我的</a><b></b></dt>
 				<dd>
 					<div class="loading-style1"><b></b>加载中，请稍候...</div>
 				</dd>

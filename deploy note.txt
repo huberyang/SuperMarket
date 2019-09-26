@@ -1,0 +1,185 @@
+	WebManager:   	    192.168.28.132:8080   8005/8009       remote debug listener port： 8000
+	Portal:       	    192.168.28.132:8082   8007/8011       remote debug listener port： 8000
+	
+	############################ mutiple tomcat run on one server ########################################################################
+		/etc/profile
+			export CATALINA_manager_BASE=/usr/tomcat/apache-tomcat-8.5.42
+			export CATALINA_manager_HOME=/usr/tomcat/apache-tomcat-8.5.42
+			export TOMCAT_manager_HOME=/usr/tomcat/apache-tomcat-8.5.42
+			export CATALINA_portal_BASE=/usr/portal-8082-tomcat/apache-tomcat-8.5.42
+			export CATALINA_portal_HOME=/usr/portal-8082-tomcat/apache-tomcat-8.5.42
+			export TOMCAT_portal_HOME=/usr/portal-8082-tomcat/apache-tomcat-8.5.42
+				
+		manager:
+			startup.sh
+			shutdown.sh
+				export CATALINA_HOME=$CATALINA_manager_HOME  
+				export CATALINA_BASE=$CATALINA_manager_BASE
+	
+		portal:
+			startup.sh
+			shutdown.sh
+				export CATALINA_HOME=$CATALINA_portal_HOME  
+				export CATALINA_BASE=$CATALINA_portal_BASE
+		
+	############################## mutiple tomcat run on one server ########################################################################
+	
+	
+	SSO:          		192.168.28.128:8085   8010/8014       remote debug listener port： 8000
+	Search:		  		192.168.28.128:8084   8009/8013       remote debug listener port： 8000
+	Rest:		  		192.168.28.128:8083   8008/8012       remote debug listener port： 8000
+	Order:        		192.168.28.128:8086	  8011/8015		  remote debug listener port： 8000
+	
+	
+	
+	file:      		    192.168.28.128:8888
+	redis:              192.168.28.130:6379
+	redis-cluater:      192.168.28.129:7001-->7006
+	solr:               192.168.28.130:8080
+	solr-cluster:		
+	nginx-cluster:      192.268.28.131:8080 
+	
+	
+	windows	host：
+	
+	192.168.28.130  www.supermarket.com
+	192.168.28.130  supermarket.com
+	192.168.28.130	supermarket.manager.com
+	192.168.28.130	rest.supermarket.com
+	192.168.28.130  search.supermarket.com
+	192.168.28.130  sso.supermarket.com
+	192.168.28.130  order.supermarket.com
+	
+	
+	nginx.conf configuration
+	#############################################supermarket-config start ##################################################
+	
+	upstream www.supermarket.com{
+	   server 192.168.28.132:8082;
+	}
+	
+	upstream supermarket.manager.com{
+	   server 192.168.28.132:8080;
+	}
+	
+	upstream rest.supermarket.com{
+	   server 192.168.28.128:8083;
+	}
+	
+	upstream search.supermarket.com{
+	   server 192.168.28.128:8084;
+	}
+	
+	upstream sso.supermarket.com{
+	   server 192.168.28.128:8085;
+	}
+	
+	upstream order.supermarket.com{
+	   server 192.168.28.128:8086;
+	}
+	
+	server {
+        listen       80;
+        server_name  www.supermarket.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://www.supermarket.com;
+            index  index.html index.htm;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  supermarket.manager.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://supermarket.manager.com;
+            index  index.html index.htm;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  rest.supermarket.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://rest.supermarket.com;
+            index  index.html index.htm;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  search.supermarket.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://search.supermarket.com;
+            index  index.html index.htm;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  sso.supermarket.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://sso.supermarket.com;
+            index  index.html index.htm;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  order.supermarket.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            #root   html;
+			proxy_pass http://order.supermarket.com;
+            index  index.html index.htm;
+        }
+    }
+
+	############################################# supermarket-config end ##################################################
+	
+	
+	
+	remote debug:
+	1.修改： catalina.sh文件
+	2.修改  端口监听地址
+	3.启动 ./catalina.sh jpda start
+	
+	
+	./catalina.sh
+	CATALINA_OPTS="-Xdebug  -Xrunjdwp:transport=dt_socket,address=0.0.0.0:8000,server=y,suspend=n"
+	and jpda config refer to sso 
+	
+	start with command ./catalina.sh start  remote debug will work

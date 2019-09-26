@@ -14,7 +14,7 @@
 <body>
 <div class="w" id="logo">
     <div>
-    	<a href="http://localhost:8082">
+    	<a href="http://www.supermarket.com">
     		<img src="/sso/images/supermarket-logo.gif" alt="超级市场" width="170" height="60"/>
     	</a> <b></b>
     </div>

@@ -165,6 +165,10 @@
 						<port>8085</port>
 						<!-- 根目录 -->
 						<path>/</path>
+						<!--tomcat7 热部署配置,注意：tomcat6熱部署url為：http://192.168.28.128:8085/manager -->
+						<url>http://192.168.28.128:8085/manager/text</url>
+						<username>tomcat</username>
+						<password>tomcat</password>
 					</configuration>
 				</plugin>
 			</plugins>

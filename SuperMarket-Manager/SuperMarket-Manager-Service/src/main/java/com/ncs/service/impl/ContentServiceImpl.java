@@ -46,8 +46,8 @@ public class ContentServiceImpl implements ContentService {
 
 	/**
 	 * title: 标题 subTitle: 标题 titleDesc: 标题 url: http://www.jd.com pic:
-	 * http://localhost:9000/images/2015/07/27/1437979301511057.jpg pic2: content:
-	 * 标题1
+	 * http://192.168.28.128:8888/images/2015/07/27/1437979301511057.jpg pic2:
+	 * content: 标题1
 	 */
 	@Override
 	public SmResult updateContent(ContentCateVO contentCateVO) throws Exception {

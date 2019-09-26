@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import com.ncs.common.utils.CookieUtils;
-import com.ncs.common.utils.HttpClientUtils;
 import com.ncs.common.utils.JsonUtils;
 import com.ncs.common.utils.pojo.SmResult;
 import com.ncs.mapper.TbUserMapper;
@@ -75,9 +74,6 @@ public class LoginServiceImpl implements LoginService {
 		// save the token to the cookie,so that browser can use it to check user's login
 		// status
 		CookieUtils.setCookie(request, response, "SM_TOKEN", token);
-
-		// when login success, transfer cartItem from cookie to redis
-		HttpClientUtils.doGet(cart_base_url + cart_transfer_data_to_redis + user.getId() + ".action");
 
 		return SmResult.ok(user.getId());
 	}

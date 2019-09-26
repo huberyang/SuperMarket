@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -76,12 +78,13 @@ public class CartController {
 		return "redirect:/cart/show.html";
 	}
 
-	@RequestMapping("/transfer/{userId}")
+	@RequestMapping(value = "/transfer/{userId}", method = RequestMethod.POST)
 	@ResponseBody
-	public SmResult transferCartDataToRedis(@PathVariable("userId") Long userId, HttpServletRequest request,
+	public SmResult transferCartDataToRedis(@PathVariable("userId") Long userId,
+			@RequestBody List<CartItem> cartItemListInCookie, HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			SmResult result = cartService.transferCookieDataToRedis(userId, request, response);
+			SmResult result = cartService.transferCookieDataToRedis(userId, cartItemListInCookie, request, response);
 			return result;
 		} catch (Exception e) {
 			e.printStackTrace();

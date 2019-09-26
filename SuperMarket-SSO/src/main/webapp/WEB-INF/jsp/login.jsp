@@ -7,6 +7,7 @@
     <title>登录超级市场</title>
     <link type="text/css" rel="stylesheet" href="/sso/css/login.css"/>
     <script type="text/javascript" src="/sso/js/jquery-1.6.4.js"></script>
+    <script type="text/javascript" src="/sso/js/jquery.cookie.js"></script>
 </head>
 <body>
 <div class="w">
@@ -63,32 +64,73 @@
 	var LOGIN = {
 			checkInput:function() {
 				if ($("#loginname").val() == "") {
-					alert("用户名不能为空");
+					alert("username can't be null");
 					$("#loginname").focus();
 					return false;
 				}
 				if ($("#nloginpwd").val() == "") {
-					alert("密码不能为空");
+					alert("password can't be null");
 					$("#nloginpwd").focus();
 					return false;
 				}
 				return true;
 			},
-			doLogin:function() {
+			/* doLogin:function() {
 				$.post("/sso/user/login", $("#formlogin").serialize(),function(data){
 					if (data.status == 200) {
-						alert("登录成功！");
+						alert("login success!");
 						if (redirectUrl == "") {
 							location.href = "http://www.supermarket.com";
 						} else {
 							location.href = redirectUrl;
 						}
 					} else {
-						alert("登录失败，原因是：" + data.msg);
+						alert("login failed,the reason was：" + data.msg);
+						$("#loginname").select();
+					}
+				});
+			}, */
+			
+			doLogin:function() {
+				$.post("/sso/user/login", $("#formlogin").serialize(),function(data){
+					if (data.status == 200) {
+						alert("login success!");
+						
+						//request to transfer cart cookie info to the login user's redis region
+						var cartCookie=$.cookie("SM_CART");
+						
+						if(!cartCookie){
+							if (redirectUrl == "") {
+								location.href = "http://www.supermarket.com";
+							} else {
+								location.href = redirectUrl;
+							}
+						}else{
+							$.ajax({
+								url : "http://www.supermarket.com/cart/transfer/" + data.data+".action",
+								dataType : "jsonp",
+								type : "POST",
+								data:cartCookie, //change the javascript obejct to a string (use with backend data intercahnge)
+				                contentType:"application/json;charset=utf-8", //declare contentType
+				                dataType: "json",//declare the return data format
+								success:function(data){
+									if(data.status==200){
+										if (redirectUrl == "") {
+											location.href = "http://www.supermarket.com";
+										} else {
+											location.href = redirectUrl;
+										}
+									}
+								}
+							});
+						}
+					} else {
+						alert("login failed,the reason was：" + data.msg);
 						$("#loginname").select();
 					}
 				});
 			},
+			
 			login:function() {
 				if (this.checkInput()) {
 					this.doLogin();

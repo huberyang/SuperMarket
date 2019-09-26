@@ -70,11 +70,14 @@ public interface CartService {
 	 * 用户登陆后，需要将用户未登陆时加入到cookie购物车内的商品列表保存到登陆时的redis商品列表中
 	 * 
 	 * @param userId
+	 * @param cartItemList
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
-	public SmResult transferCookieDataToRedis(Long userId, HttpServletRequest request, HttpServletResponse response)
+	public SmResult transferCookieDataToRedis(Long userId, List<CartItem> cartItemListInCookie,
+			HttpServletRequest request,
+			HttpServletResponse response)
 			throws Exception;
 
 }

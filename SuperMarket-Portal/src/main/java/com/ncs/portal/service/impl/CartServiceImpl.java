@@ -263,23 +263,23 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public SmResult transferCookieDataToRedis(Long userId, HttpServletRequest request, HttpServletResponse response)
+	public SmResult transferCookieDataToRedis(Long userId, List<CartItem> cartItemListInCookie,
+			HttpServletRequest request,
+			HttpServletResponse response)
 			throws Exception {
 
-		List<CartItem> cartItemListFromCookie = new ArrayList<>();
 		List<CartItem> cartItemListFromRedis = new ArrayList<>();
 
-		cartItemListFromCookie = getCateItemListFromCookie(request);
 		cartItemListFromRedis = getCateItemListFromRedis(userId);
 
-		if (cartItemListFromCookie != null && !cartItemListFromCookie.isEmpty()) {// 如果cookie存在购物车列表
-			for (CartItem cartItem : cartItemListFromCookie) {
+		if (cartItemListInCookie != null && !cartItemListInCookie.isEmpty()) {// 如果cookie存在购物车列表
+			for (CartItem cartItem : cartItemListInCookie) {
 				if (cartItemListFromRedis != null && !cartItemListFromRedis.isEmpty()) {// 如果redis中存在购物车列表
-					for (CartItem cartItemRedis : cartItemListFromRedis) {
+					for (int i = 0; i < cartItemListFromRedis.size(); i++) {
 						// 合并cookie中的购物车列表到redis中
-						if (cartItemRedis.getItemId().equals(cartItem.getItemId())) {
+						if (cartItemListFromRedis.get(i).getItemId().equals(cartItem.getItemId())) {
 							// 存在相同商品，修改redis中商品数量
-							cartItemRedis.setNum(cartItemRedis.getNum() + 1);
+							cartItemListFromRedis.get(i).setNum(cartItemListFromRedis.get(i).getNum() + 1);
 						} else {
 							// redis中不存在该商品，则直接增加商品
 							cartItemListFromRedis.add(cartItem);

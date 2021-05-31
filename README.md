@@ -1,5 +1,5 @@
 # SuperMarket
-SuperMarket-Online
+SuperMarket-Online/n
 //公用模块
 SuperMarket-Common
 //后台管理
